@@ -27,7 +27,7 @@
                 <div class="product-item">
                     <a href="#"><img src="productimage/{{$product->image}}" alt=""></a>
                     <div class="down-content">
-                        <a href="#"><h4>{{$product->name}}</h4></a>
+                        <a href="#" ><h4>{{$product->name}}</h4></a>
                         <h6>{{$product->price}} GEL</h6>
                         <p>{{$product->description}}}</p>
                         <a class="btn btn-success cartbtn" href="#">Add to Cart</a>
@@ -44,7 +44,7 @@
 
         @if(method_exists($data,'links'))
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center pagination">
 
             {!! $data->links() !!}
 
