@@ -33,6 +33,7 @@ Route::get('/updateproduct/{id}', [AdminController::class, 'updateproduct'])->na
 Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])->name('updatedproduct');
 
 Route::get('/search', [HomeController::class,'search']);
+Route::post('/addcart/{id}', [HomeController::class, 'addcart'])->name('addcart');
 
 
 Route::middleware([

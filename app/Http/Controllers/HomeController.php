@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+
 
 class HomeController extends Controller
 {
@@ -54,4 +56,36 @@ class HomeController extends Controller
         return view('user.home',compact('data'));
 
     }
+
+    public function addcart(Request $request, $id)
+    {
+        // Check if the user is authenticated
+        if (auth()->check()) {
+            $user = auth()->user();
+            $product = Product::find($id);
+
+            $cart = new Cart;
+
+            // Set cart attributes based on user and product data
+            $cart->name = $user->name;
+            $cart->email = $user->email;
+            $cart->phone = $user->phone;
+            $cart->product_name = $product->name;
+            $cart->price = $product->price;
+            $cart->quantity = $product->quantity;
+            $cart->description = $product->description;
+            $cart->image = $product->image;
+
+            $cart->save();
+
+
+            return redirect()->back(); // Redirect back after adding to cart
+        } else {
+            // If the user is not authenticated, redirect to login
+            return redirect('login');
+
+        }
+    }
+
+
 }

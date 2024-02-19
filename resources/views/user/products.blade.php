@@ -21,6 +21,7 @@
                     </form>
                 </div>
             </div>
+            <div id="notification" class="notification"></div>
 
             @foreach($data as $product)
             <div class="col-md-4">
@@ -30,7 +31,17 @@
                         <a href="#" ><h4>{{$product->name}}</h4></a>
                         <h6>{{$product->price}} GEL</h6>
                         <p>{{$product->description}}}</p>
-                        <a class="btn btn-success cartbtn" href="#">Add to Cart</a>
+
+                        <form action="{{ route('addcart', $product->id) }}" method="POST">
+                            @csrf
+
+                            <!-- Add hidden input to include the HTTP method -->
+                            {{ method_field('POST') }}
+
+                            <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
+                        </form>
+
+                        {{--  <a class="btn btn-success cartbtn" href="#">Add to Cart</a>--}}
 
                         <span>Reviews (24)</span>
                     </div>

@@ -60,6 +60,7 @@
 
 
 
+
                     @if (Route::has('login'))
 
                         @auth
