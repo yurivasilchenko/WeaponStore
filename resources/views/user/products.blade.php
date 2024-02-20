@@ -32,18 +32,20 @@
                         <h6>{{$product->price}} GEL</h6>
                         <p>{{$product->description}}}</p>
 
-                        <form action="{{ route('addcart', $product->id) }}" method="POST">
+                        <form action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                             @csrf
-
-                            <!-- Add hidden input to include the HTTP method -->
-                            {{ method_field('POST') }}
-
+                            <input type="hidden" name="productId" value="{{$product->id}}">
                             <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
                         </form>
 
-                        {{--  <a class="btn btn-success cartbtn" href="#">Add to Cart</a>--}}
-
-                        <span>Reviews (24)</span>
+                        <div class="success-checkmark">
+                            <div class="check-icon">
+                                <span class="icon-line line-tip"></span>
+                                <span class="icon-line line-long"></span>
+                                <div class="icon-circle"></div>
+                                <div class="icon-fix"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,9 +59,15 @@
 
         <div class="d-flex justify-content-center pagination">
 
-            {!! $data->links() !!}
+            {{ $data->links() }}
 
         </div>
         @endif
+
     </div>
 </div>
+
+@include('user.css')
+@include('user.scripts')
+
+

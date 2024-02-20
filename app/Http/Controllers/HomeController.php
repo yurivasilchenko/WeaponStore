@@ -12,8 +12,10 @@ use App\Models\Product;
 class HomeController extends Controller
 {
     public function redirect() {
+
         if (auth()->check()) {
             $usertype = auth()->user()->usertype;
+
 
             if ($usertype == 'admin') {
                 return view('admin.home');
@@ -26,6 +28,7 @@ class HomeController extends Controller
             $data = product::paginate('6');
             return view('user.home',compact('data'));
         }
+
     }
 
 
@@ -57,12 +60,12 @@ class HomeController extends Controller
 
     }
 
-    public function addcart(Request $request, $id)
+    public function addcart(Request $request)
     {
+
         // Check if the user is authenticated
         if (auth()->check()) {
             $user = auth()->user();
-            $product = Product::find($id);
 
             $cart = new Cart;
 
@@ -70,22 +73,23 @@ class HomeController extends Controller
             $cart->name = $user->name;
             $cart->email = $user->email;
             $cart->phone = $user->phone;
-            $cart->product_name = $product->name;
-            $cart->price = $product->price;
-            $cart->quantity = $product->quantity;
-            $cart->description = $product->description;
-            $cart->image = $product->image;
+            $cart->product_name = $request->name;
+            $cart->price = $request->price;
+            $cart->quantity = $request->quantity;
+            $cart->description = $request->description;
+            $cart->image = $request->image;
 
             $cart->save();
 
-
-            return redirect()->back(); // Redirect back after adding to cart
+            // Return a JSON response indicating success
+            return response()->json(['success' => true]);
         } else {
-            // If the user is not authenticated, redirect to login
-            return redirect('login');
-
+            // If the user is not authenticated, return a JSON response indicating failure
+            return response()->json(['success' => false, 'message' => 'User not authenticated'], 401);
         }
     }
+
+
 
 
 }
