@@ -8,6 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+
 
     <title>Weapon Store</title>
 
@@ -34,68 +37,8 @@
 <!-- ***** Preloader End ***** -->
 
 <!-- Header -->
-<header class="">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="/"><h2>Weapon <em>Store</em></h2></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="products.html">Our Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
-                    </li>
-
-
-
-
-                    @if (Route::has('login'))
-
-                        @auth
-                            <li class="nav-item">
-
-                                    <x-app-layout>
-
-                                    </x-app-layout>
-
-                                </li>
-
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Log in</a>
-                            </li>
-
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}" >Register</a>
-                                </li>
-
-
-                                @endif
-                                @endauth
-
-                                @endif
-
-
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+@include('user.header')
+<!--Header end -->
 
 <!-- Page Content -->
 <!-- Banner Starts Here -->

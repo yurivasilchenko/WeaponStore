@@ -1,5 +1,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+
         // Get the cart items from local storage
         let cartItems = localStorage.getItem('cartItems');
         if (!cartItems) {
@@ -24,6 +25,8 @@
             // Add click event listener to each button
             button.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent the default click behavior
+
+
 
                 // Disable the button to prevent multiple submissions
                 this.disabled = true;
@@ -60,8 +63,17 @@
                     if (checkmark) {
                         checkmark.style.display = 'block';
                     }
+
+                    // Update the cart count
+                    updateCartCount();
                 }).catch(error => {
                     console.error('An error occurred:', error);
+
+                }).catch(error => {
+                    console.error('An error occurred:', error);
+
+
+
 
                     // Redirect to login if the user is not authenticated
                     window.location.href = 'login';
@@ -70,9 +82,27 @@
         });
     });
 
+    // C
     function authCheck() {
         // Check if the user is authenticated using Laravel's Auth facade
         return {{Auth::check()}}; // This will output true if the user is authenticated, false otherwise
     }
+
+    //Updating Count on Cart--------------------------------------------------------------------------------------------
+    function updateCartCount() {
+        console.log('Function called');
+        fetch('{{ route('updatecartcount') }}')
+            .then(response => response.json())
+            .then(data => {
+                let cartCountElement = document.querySelector('.cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = '[' + data.count + ']';
+                }
+            })
+            .catch(error => {
+                console.error('Error updating cart count:', error);
+            });
+    }
+
 
 </script>

@@ -35,6 +35,12 @@ Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])-
 Route::get('/search', [HomeController::class,'search']);
 Route::post('/addcart/{id}', [HomeController::class, 'addcart'])->name('addcart');
 
+Route::get('/showcart', [HomeController::class,'showcart']);
+Route::get('/updatecartcount', [HomeController::class, 'updatecartcount'])->name('updatecartcount');
+
+
+Route::get('/delete/{id}', [HomeController::class,'deletecart']);
+
 
 Route::middleware([
     'auth:sanctum',

@@ -30,7 +30,7 @@
                     <div class="down-content">
                         <a href="#" ><h4>{{$product->name}}</h4></a>
                         <h6>{{$product->price}} GEL</h6>
-                        <p>{{$product->description}}}</p>
+                        <p>{{$product->description}}</p>
 
                         <form action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                             @csrf

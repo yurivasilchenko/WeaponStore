@@ -21,11 +21,18 @@ class HomeController extends Controller
                 return view('admin.home');
             } else {
                 $data = product::paginate('6');
-                return view('user.home',compact('data'));
+
+                $user = auth()->user();
+
+                $count = cart::where('email',$user->email)->count();
+
+                return view('user.home',compact('data','count'));
             }
         } else {
             // User is not authenticated, redirect to a default view or show an error message.
             $data = product::paginate('6');
+
+
             return view('user.home',compact('data'));
         }
 
@@ -70,6 +77,7 @@ class HomeController extends Controller
             $cart = new Cart;
 
             // Set cart attributes based on user and product data
+            $cart->id = $request->id;
             $cart->name = $user->name;
             $cart->email = $user->email;
             $cart->phone = $user->phone;
@@ -88,6 +96,36 @@ class HomeController extends Controller
             return response()->json(['success' => false, 'message' => 'User not authenticated'], 401);
         }
     }
+
+    public function showcart(){
+
+        $user = auth()->user();
+        $cart = cart::where('email',$user->email)->get();
+        $count = cart::where('email',$user->email)->count();
+
+        return view('user.showcart',compact('count','cart'));
+    }
+    public function updatecartcount()
+    {
+        $user = auth()->user();
+        $count = Cart::where('email', $user->email)->count();
+
+        return response()->json(['count' => $count]);
+    }
+
+
+
+    public function deletecart($id){
+        $data = cart::find($id);
+        $data->delete();
+
+        // Assuming you also want to update the cart count here
+        $user = auth()->user();
+        $count = cart::where('email', $user->email)->count();
+
+        return response()->json(['success' => true, 'count' => $count]);
+    }
+
 
 
 
