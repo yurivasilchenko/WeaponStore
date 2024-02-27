@@ -43,6 +43,7 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
+        <form action="{{url('order')}}" method="POST">
 
         <table class="table">
             <thead>
@@ -54,39 +55,56 @@
             </tr>
             </thead>
             <tbody>
+
+
+               @csrf
+
             @foreach($cart as $carts)
                 <tr>
-                    <td class="align-middle">{{$carts->product_name}}</td>
-                    <td class="align-middle">{{$carts->price}}</td>
+                    <td class="align-middle">
+                        <input type="text" name="product_name[]" value="{{$carts->product_name}}" hidden="">
+                        {{$carts->product_name}}
+                    </td>
+
+                    <td class="align-middle">
+                        <input type="text" name="quantity[]" value="{{$carts->quantity}}" hidden="">
+                        {{$carts->quantity}}
+                    </td>
+
+                    <td class="align-middle">
+                        <input type="text" name="price[]" value="{{$carts->price}}" hidden="">
+                        {{$carts->price}}
+                    </td>
+
                     <td class="text-center align-middle">
+                        <input type="text" name="image[]" value="{{$carts->image}}" hidden="">
                         <img src="/productimage/{{$carts->image}}" class="img-thumbnail" style="max-height: 100px; max-width: 100px;">
                     </td>
+
                     <td class="align-middle">
                         <a class="btn btn-danger deletebtn" href="{{url('delete',$carts->id)}}" data-product-id="{{$carts->id}}">Delete</a>
                     </td>
 
                 </tr>
             @endforeach
+
             </tbody>
         </table>
+
+            <div class="container showcart-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="inner-content">
+                            <button class="btn btn-success">Place an Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
 </div>
 
-
-
-<footer>
-    <div class="container showcart-footer">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="inner-content">
-                    <button class="btn btn-success">Place an Order</button>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 
 
 <!-- Bootstrap core JavaScript -->

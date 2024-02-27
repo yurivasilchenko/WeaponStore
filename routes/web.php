@@ -41,6 +41,9 @@ Route::get('/updatecartcount', [HomeController::class, 'updatecartcount'])->name
 
 Route::get('/delete/{id}', [HomeController::class,'deletecart']);
 
+Route::post('/order', [HomeController::class,'order']);
+Route::get('/showorder',[AdminController::class,'showorder']);
+
 
 Route::middleware([
     'auth:sanctum',

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 
 class HomeController extends Controller
@@ -18,7 +20,7 @@ class HomeController extends Controller
 
 
             if ($usertype == 'admin') {
-                return view('admin.home');
+                return redirect('showorder');
             } else {
                 $data = product::paginate('6');
 
@@ -124,6 +126,42 @@ class HomeController extends Controller
         $count = cart::where('email', $user->email)->count();
 
         return response()->json(['success' => true, 'count' => $count]);
+    }
+
+
+    public function order(Request $request){
+
+        $user = auth()->user();
+
+
+
+        $name = $user->name;
+        $email = $user->email;
+        $phone = $user->phone;
+        $address = $user->address;
+
+        foreach ($request->product_name as $key => $product_name){
+
+            $order = new Order;
+
+            $order->product_name = $request->product_name[$key];
+            $order->price = $request->price[$key];
+            $order->quantity = $request->quantity[$key];
+            $order->image = $request->image[$key];
+
+
+            $order->name = $name;
+            $order->email = $email;
+            $order->phone = $phone;
+            $order->address = $address;
+
+            $order->save();
+
+
+        }
+
+        DB::table('carts')->where('email',$email)->delete();
+        return redirect()->back();
     }
 
 

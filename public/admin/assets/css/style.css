@@ -20921,4 +20921,21 @@ div.tagsinput {
     border-color: #3d4872!important;
 }
 
+.custom-img{
+    width :100px!important;
+    height :100px!important;
+    border-radius: 0!important;
+}
+.custom-card{
+    background-color:#027148;
+    border-radius: 6px
+}
+.custom-brand:hover {
+    color: green;
+}
+
+.custom-navigation{
+    margin-top: 50px;
+}
+
 
