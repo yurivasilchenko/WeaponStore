@@ -53,6 +53,15 @@ class HomeController extends Controller
         }
     }
 
+    public function show($id){
+
+        $product = Product::findOrFail($id);
+        $user = auth()->user();
+        $count = cart::where('email',$user->email)->count();
+
+        return view('user.showproduct',compact('product','count'));
+    }
+
     public function search(Request $request){
 
         $search = $request->search;
@@ -163,9 +172,5 @@ class HomeController extends Controller
         DB::table('carts')->where('email',$email)->delete();
         return redirect()->back();
     }
-
-
-
-
 
 }

@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 
 class AdminController extends Controller
 {
     public function products(){
-        return view('admin.products');
+
+
+                return view('admin.products');
+
+
     }
 
     public function uploadproduct(Request $request){

@@ -17,32 +17,27 @@ use App\Models\User;
 */
 
 
+Route::middleware(['admin'])->group(function () {
+    Route::get('/products', [AdminController::class, 'products']);
+    Route::post('/uploadproduct', [AdminController::class, 'uploadproduct']);
+    Route::get('/showproducts', [AdminController::class, 'showproducts']);
+    Route::get('/deleteproduct/{id}', [AdminController::class, 'deleteproduct'])->name('deleteproduct');
+    Route::get('/updateproduct/{id}', [AdminController::class, 'updateproduct'])->name('updateproduct');
+    Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])->name('updatedproduct');
+    Route::get('/showorder',[AdminController::class,'showorder']);
+});
+
 
 Route::get('/redirect', [HomeController::class, 'redirect']);
 Route::get('/', [HomeController::class, 'index']);
-
-Route::get('/products', [AdminController::class, 'products']);
-Route::post('/uploadproduct', [AdminController::class, 'uploadproduct']);
-
-Route::get('/showproducts', [AdminController::class, 'showproducts']);
-
-/*Route::get('/deleteproduct/{id}', [AdminController::class, 'deleteproduct']);*/
-Route::get('/deleteproduct/{id}', [AdminController::class, 'deleteproduct'])->name('deleteproduct');
-
-Route::get('/updateproduct/{id}', [AdminController::class, 'updateproduct'])->name('updateproduct');
-Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])->name('updatedproduct');
-
 Route::get('/search', [HomeController::class,'search']);
 Route::post('/addcart/{id}', [HomeController::class, 'addcart'])->name('addcart');
-
 Route::get('/showcart', [HomeController::class,'showcart']);
 Route::get('/updatecartcount', [HomeController::class, 'updatecartcount'])->name('updatecartcount');
-
-
 Route::get('/delete/{id}', [HomeController::class,'deletecart']);
-
 Route::post('/order', [HomeController::class,'order']);
-Route::get('/showorder',[AdminController::class,'showorder']);
+Route::get('/product/{id}',[HomeController::class,'show'])->name('showproduct');
+
 
 
 Route::middleware([
