@@ -47,8 +47,18 @@
                     <td>{{$product->quantity}}</td>
                     <td>{{$product->description}}</td>
                     <td class="d-flex justify-content-center align-items-center">
-                        <img  height="100px" width="100px" src="/productimage/{{$product->image}}">
+                        @if(!empty($product->image))
+                            @php
+                                $images = json_decode($product->image);
+                                $firstImage = isset($images[0]) ? $images[0] : null;
+                            @endphp
+
+                            @if(!empty($firstImage))
+                                <img height="100px" width="100px" src="/productimages/{{$firstImage}}">
+                            @endif
+                        @endif
                     </td>
+
                     <td>
                        <a class="btn btn-warning" href="{{url('updateproduct', $product->id) }}">Update</a>
                     </td>

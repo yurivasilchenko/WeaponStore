@@ -76,7 +76,18 @@
 
                     <td class="text-center align-middle">
                         <input type="text" name="image[]" value="{{$carts->image}}" hidden="">
-                        <img src="/productimage/{{$carts->image}}" class="img-thumbnail" style="max-height: 100px; max-width: 100px;">
+
+                        @if(!empty($carts->image))
+                            @php
+                                $images = json_decode($carts->image);
+                                $firstImage = isset($images[0]) ? $images[0] : null;
+                            @endphp
+
+                            @if(!empty($firstImage))
+                                <img height="100px" width="100px" src="/productimages/{{$firstImage}}">
+                            @endif
+                        @endif
+
                     </td>
 
                     <td class="align-middle">

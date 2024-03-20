@@ -32,7 +32,7 @@ class HomeController extends Controller
             }
         } else {
             // User is not authenticated, redirect to a default view or show an error message.
-            $data = product::paginate('6');
+            $data = product::paginate('9');
 
 
             return view('user.home',compact('data'));
@@ -43,21 +43,16 @@ class HomeController extends Controller
 
     public function index(){
 
-        if(Auth::id()){
-            return redirect('redirect');
-        }
-        else{
-            $data = product::paginate('6');
 
-            return view('user.home', compact('data'));
-        }
+            return redirect('redirect');
+
     }
 
     public function show($id){
 
         $product = Product::findOrFail($id);
         $user = auth()->user();
-        $count = cart::where('email',$user->email)->count();
+        $count = cart::where('id',$product->id)->count();
 
         return view('user.showproduct',compact('product','count'));
     }

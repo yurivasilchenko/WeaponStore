@@ -23,13 +23,21 @@ class AdminController extends Controller
 
         $data = new Product;
 
-        $image = $request->file('file'); // Access the 'file' input field
 
-        $imagename = time() . '.' . $image->getClientOriginalName();
 
-        $image->move('productimage', $imagename);
+        // Handle single or multiple image uploads
+        $images = [];
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $imageName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('productimages'), $imageName);
+                $images[] = $imageName;
+            }
+        }
 
-        $data->image = $imagename;
+
+        $data->image = json_encode($images);
+
         $data->name = $request->input('name');
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
@@ -47,15 +55,6 @@ class AdminController extends Controller
         $data = product::all();
         return view('admin.showproducts', compact("data"));
     }
-
-    /*public function deleteproduct($id){
-        $data = product::find($id);
-        $data->delete();
-
-        return redirect()->back();
-
-
-    }*/
 
     public function deleteproduct($id) {
         $data = Product::find($id);
@@ -79,16 +78,17 @@ class AdminController extends Controller
     public function updatedproduct(Request $request,$id){
         $data = Product::find($id);
 
-        $image = $request->file('file'); // Access the 'file' input field
-
-        if($image){
-            $imagename = time() . '.' . $image->getClientOriginalName();
-
-            $image->move('productimage', $imagename);
-
-            $data->image = $imagename;
+        $images = [];
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $imageName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('productimages'), $imageName);
+                $images[] = $imageName;
+            }
         }
 
+
+        $data->image = json_encode($images);
 
 
         $data->name = $request->input('name');

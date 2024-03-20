@@ -52,13 +52,23 @@
 
                     <div class="form-group col-md-4">
                         <label>Old Image</label>
-                        <img height="200px" width="200px" src="/productimage/{{$data->image}}">
+                        @if(!empty($data->image))
+                            @php
+                                $images = json_decode($data->image);
+                                $firstImage = isset($images[0]) ? $images[0] : null;
+                            @endphp
+
+                            @if(!empty($firstImage))
+                                <img height="100px" width="100px" src="/productimages/{{$firstImage}}">
+                            @endif
+                        @endif
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="file">Choose a new Image</label>
+                        <label for="files">Choose Files</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="file" name="file">
+                            <input type="file" class="custom-file-input" id="files" name="files[]" multiple>
+                            <label class="custom-file-label" for="files">Choose files</label>
                         </div>
                     </div>
 

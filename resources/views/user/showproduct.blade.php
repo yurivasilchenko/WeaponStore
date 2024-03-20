@@ -42,11 +42,19 @@
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-4">
-            <img src="/productimage/{{ $product->image }}" class="img-thumbnail" alt="{{ $product->name }}">
-        </div>
         <div class="col-md-8">
-            <div>
+            @if(!empty($product->image))
+                @php
+                    $images = json_decode($product->image);
+                    $firstImage = isset($images[0]) ? $images[0] : null;
+                @endphp
+                @if(!empty($firstImage))
+                    <img class="product-main-img" src="/productimages/{{$firstImage}}">
+                @endif
+            @endif
+        </div>
+        <div class="col-md-4">
+            <div style="margin-top: 20px;">
                 <h2>{{ $product->name }}</h2>
             </div>
             <div>
@@ -69,7 +77,28 @@
             <p>Description: {{ $product->description }}</p>
         </div>
     </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="row">
+                @if(!empty($images))
+                    @foreach($images as $image)
+                        <div class="col-md-2">
+                            <img class="img-thumbnail product-secondary-img" src="/productimages/{{$image}}" onclick="changeMainImage(this)">
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function changeMainImage(element) {
+        var mainImage = document.querySelector('.product-main-img');
+        mainImage.src = element.src;
+    }
+</script>
+
 
 
 

@@ -22,7 +22,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                // Handle errors if necessary
+                console.error(xhr.responseText);
+                showNotification("An error occurred: " + error, "error");
             }
         });
     });

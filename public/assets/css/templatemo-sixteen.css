@@ -1176,3 +1176,12 @@ footer .inner-content p a {
     border-bottom-right-radius: 0.2rem;
 }
 
+.product-main-img {
+    width: 700px;
+    height: 400px;
+}
+.product-secondary-img{
+    width: 200px;
+    height: 100px;
+}
+

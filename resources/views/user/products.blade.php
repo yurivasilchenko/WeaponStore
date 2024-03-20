@@ -26,7 +26,20 @@
             @foreach($data as $product)
             <div class="col-md-4">
                 <div class="product-item">
-                    <a href="{{route('showproduct', ['id' => $product->id])}}"><img src="productimage/{{$product->image}}" alt=""></a>
+                    <a href="{{route('showproduct', ['id' => $product->id])}}">
+
+                            @if(!empty($product->image))
+                                @php
+                                    $images = json_decode($product->image);
+                                    $firstImage = isset($images[0]) ? $images[0] : null;
+                                @endphp
+
+                                @if(!empty($firstImage))
+                                    <img  src="/productimages/{{$firstImage}}">
+                                @endif
+                            @endif
+
+                    </a>
                     <div class="down-content">
                         <a href="{{route('showproduct', ['id' => $product->id])}}" ><h4>{{$product->name}}</h4></a>
                         <h6>{{$product->price}} GEL</h6>
