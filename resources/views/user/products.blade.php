@@ -47,7 +47,7 @@
 <script>
 
 
-   document.addEventListener('DOMContentLoaded', function () {
+   /*document.addEventListener('DOMContentLoaded', function () {
        // Function to disable "Add to Cart" button if product is in cart
        function disableAddToCartButtons() {
            let cartItems = localStorage.getItem('cartItems');
@@ -106,15 +106,75 @@
            disableAddToCartButtons();
        });
    });
+*/
 
 
+   document.addEventListener('DOMContentLoaded', function () {
+       // Function to load products based on filter
 
+       function disableAddToCartButtons() {
+           let cartItems = localStorage.getItem('cartItems');
+           if (!cartItems) {
+               cartItems = [];
+           } else {
+               cartItems = JSON.parse(cartItems);
+           }
 
+           document.querySelectorAll('.cartbtn').forEach(button => {
+               let productId = button.parentElement.querySelector('input[name="productId"]').value;
 
+               if (cartItems.includes(productId)) {
+                   button.disabled = true;
+               }
+           });
+       }
 
+       function loadProducts(filter) {
+           $.ajax({
+               url: '/filter-products',
+               type: 'GET',
+               data: { type: filter },
+               success: function (response) {
+                   $('.filtered-products-container').html(response);
+                   disableAddToCartButtons(); // Re-run the disable check for add to cart buttons
 
+                   console.log('I am here');
+                   addToCartButtonFunction();
+               },
+               error: function (xhr) {
+                   console.log(xhr.responseText);
+               }
+           });
+       }
 
+       // Event listener for filter links
+       document.querySelectorAll('.filter-link').forEach(link => {
+           link.addEventListener('click', function (e) {
+               e.preventDefault();
+               var selectedType = this.dataset.type;
+               loadProducts(selectedType);
+               history.pushState(null, null, '/filter-products?type=' + selectedType);
+           });
+       });
 
+       // Event listener for browser back/forward button
+       window.addEventListener('popstate', function (event) {
+           var selectedType = getFilterTypeFromUrl();
+           loadProducts(selectedType);
+       });
+
+       // Function to extract filter type from the current URL
+       function getFilterTypeFromUrl() {
+           var urlParams = new URLSearchParams(window.location.search);
+           return urlParams.get('type');
+       }
+
+       // Initial load based on current filter in URL
+       var initialFilter = getFilterTypeFromUrl();
+       if (initialFilter) {
+           loadProducts(initialFilter);
+       }
+   });
 
 
 </script>
