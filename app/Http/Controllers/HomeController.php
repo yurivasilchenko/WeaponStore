@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 
 
 class HomeController extends Controller
@@ -22,7 +23,7 @@ class HomeController extends Controller
             if ($usertype == 'admin') {
                 return redirect('showorder');
             } else {
-                $data = product::paginate('6');
+                $data = product::paginate('20');
 
                 $user = auth()->user();
 
@@ -32,7 +33,7 @@ class HomeController extends Controller
             }
         } else {
             // User is not authenticated, redirect to a default view or show an error message.
-            $data = product::paginate('9');
+            $data = product::paginate('20');
 
 
             return view('user.home',compact('data'));
@@ -48,21 +49,26 @@ class HomeController extends Controller
 
     }
 
-    public function show($id){
-
+    public function show($id)
+    {
         $product = Product::findOrFail($id);
-        $user = auth()->user();
-        $count = cart::where('id',$product->id)->count();
+        $count = 0; // Default count if user is not authenticated
 
-        return view('user.showproduct',compact('product','count'));
+        if (auth()->check()) {
+            $user = auth()->user();
+            $count = cart::where('email', $user->email)->count();
+        }
+
+        return view('user.showproduct', compact('product', 'count'));
     }
+
 
     public function search(Request $request){
 
         $search = $request->search;
 
         if($search==""){
-            $data = product::paginate('6');
+            $data = product::paginate('12');
 
             return view('user.home', compact('data'));
         }
@@ -72,6 +78,28 @@ class HomeController extends Controller
         return view('user.home',compact('data'));
 
     }
+
+
+    public function filterProducts(Request $request)
+    {
+        $type = $request->input('type');
+        $filteredProducts = Product::where('type', $type)->paginate(10);
+
+        $count = 0; // Default count if user is not authenticated
+        if (auth()->check()) {
+            $user = auth()->user();
+            $count = cart::where('email', $user->email)->count();
+        }
+
+        if ($request->ajax()) {
+            // Return the partial view with the filtered products
+            return response()->view('user.filtered_products', ['data' => $filteredProducts, 'count' => $count])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+        } else {
+            // Return the full view with layout
+            return view('user.home', ['data' => $filteredProducts, 'count' => $count]);
+        }
+    }
+
 
     public function addcart(Request $request)
     {
@@ -88,6 +116,7 @@ class HomeController extends Controller
             $cart->email = $user->email;
             $cart->phone = $user->phone;
             $cart->product_name = $request->name;
+            $cart->type = $request->type;
             $cart->price = $request->price;
             $cart->quantity = $request->quantity;
             $cart->description = $request->description;
@@ -100,6 +129,7 @@ class HomeController extends Controller
         } else {
             // If the user is not authenticated, return a JSON response indicating failure
             return response()->json(['success' => false, 'message' => 'User not authenticated'], 401);
+            /*return view('auth.login');*/
         }
     }
 
@@ -149,6 +179,7 @@ class HomeController extends Controller
             $order = new Order;
 
             $order->product_name = $request->product_name[$key];
+            $order->type = $request->type[$key];
             $order->price = $request->price[$key];
             $order->quantity = $request->quantity[$key];
             $order->image = $request->image[$key];

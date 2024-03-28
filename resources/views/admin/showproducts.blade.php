@@ -27,6 +27,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Description</th>
@@ -43,6 +44,7 @@
 
                 <tr>
                     <td>{{$product->name}}</td>
+                    <td>{{$product->type}}</td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->quantity}}</td>
                     <td>{{$product->description}}</td>

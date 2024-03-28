@@ -39,6 +39,7 @@ class AdminController extends Controller
         $data->image = json_encode($images);
 
         $data->name = $request->input('name');
+        $data->type = $request->input('type');
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
@@ -92,9 +93,11 @@ class AdminController extends Controller
 
 
         $data->name = $request->input('name');
+        $data->type = $request->input('type');
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
+
 
         $data->save();
 

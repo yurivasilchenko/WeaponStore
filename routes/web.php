@@ -37,6 +37,11 @@ Route::get('/updatecartcount', [HomeController::class, 'updatecartcount'])->name
 Route::get('/delete/{id}', [HomeController::class,'deletecart']);
 Route::post('/order', [HomeController::class,'order']);
 Route::get('/product/{id}',[HomeController::class,'show'])->name('showproduct');
+Route::get('/filter-products', [HomeController::class, 'filterProducts'])->name('filter-products');
+
+
+
+
 
 
 

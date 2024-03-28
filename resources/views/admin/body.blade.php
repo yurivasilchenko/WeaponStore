@@ -108,6 +108,7 @@
                                         <th> Client Phone </th>
                                         <th> Client Address </th>
                                         <th> Product Name </th>
+                                        <th> Type </th>
                                         <th> Quantity </th>
                                         <th> Price </th>
                                         <th> Image</th>
@@ -134,10 +135,21 @@
                                         <td> {{$orders->phone}} </td>
                                         <td> {{$orders->address}} </td>
                                         <td> {{$orders->product_name}} </td>
+                                        <td> {{$orders->type}} </td>
                                         <td> {{$orders->quantity}} </td>
                                         <td> {{$orders->price}} </td>
                                         <td>
-                                            <img  class="custom-img"  src="/productimage/{{$orders->image}}">
+                                           {{-- <img  class="custom-img"  src="/productimages/{{$firstImage}}">--}}
+                                            @if(!empty($orders->image))
+                                                @php
+                                                    $images = json_decode($orders->image);
+                                                    $firstImage = isset($images[0]) ? $images[0] : null;
+                                                @endphp
+
+                                                @if(!empty($firstImage))
+                                                    <img class="custom-img" src="/productimages/{{$firstImage}}">
+                                                @endif
+                                            @endif
 
                                         </td>
                                         <td>

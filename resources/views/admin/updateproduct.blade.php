@@ -36,6 +36,17 @@
                     </div>
 
                     <div class="form-group col-md-4">
+                        <label for="type">Product Type</label>
+                        <select class="form-control" id="type" name="type" value="{{$data->type}}" required>
+                            <option value="A1">A1</option>
+                            <option value="A2">A2</option>
+                            <option value="A3">A3</option>
+                            <option value="A4">A4</option>
+                            <option value="A5">A5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
                         <label for="price">Price</label>
                         <input type="number" class="form-control" id="price" name="price" value="{{$data->price}}" required>
                     </div>

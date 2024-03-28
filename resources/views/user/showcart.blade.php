@@ -47,6 +47,7 @@
             <thead>
             <tr>
                 <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
                 <th scope="col">Image</th>
                 <th scope="col">Action</th>
@@ -64,10 +65,22 @@
                         {{$carts->product_name}}
                     </td>
 
+                    <td class="align-middle" style="display: none;">
+                        <input type="text" name="type[]" value="{{$carts->type}}">
+                        {{$carts->type}}
+                    </td>
+
+
+
+
+
                     <td class="align-middle">
-                        <input type="text" name="quantity[]" value="{{$carts->quantity}}" hidden="">
+                        <input type="number" name="quantity[]" value="1" min="1" step="1">
                         {{$carts->quantity}}
                     </td>
+
+
+
 
                     <td class="align-middle">
                         <input type="text" name="price[]" value="{{$carts->price}}" hidden="">

@@ -19,63 +19,22 @@
                             </div>
                         </div>
                     </form>
+
+
                 </div>
+                <a href="#" class="filter-link" data-type="A1">A1</a>
+                <a href="#" class="filter-link" data-type="A2">A2</a>
+                <a href="#" class="filter-link" data-type="A3">A3</a>
+                <a href="#" class="filter-link" data-type="A4">A4</a>
+                <a href="#" class="filter-link" data-type="A5">A5</a>
             </div>
             <div id="notification" class="notification"></div>
 
-            @foreach($data as $product)
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="{{route('showproduct', ['id' => $product->id])}}">
 
-                            @if(!empty($product->image))
-                                @php
-                                    $images = json_decode($product->image);
-                                    $firstImage = isset($images[0]) ? $images[0] : null;
-                                @endphp
-
-                                @if(!empty($firstImage))
-                                    <img  src="/productimages/{{$firstImage}}">
-                                @endif
-                            @endif
-
-                    </a>
-                    <div class="down-content">
-                        <a href="{{route('showproduct', ['id' => $product->id])}}" ><h4>{{$product->name}}</h4></a>
-                        <h6>{{$product->price}} GEL</h6>
-                        <p>{{$product->description}}</p>
-
-                        <form action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="productId" value="{{$product->id}}">
-                            <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
-                        </form>
-
-                        <div class="success-checkmark">
-                            <div class="check-icon">
-                                <span class="icon-line line-tip"></span>
-                                <span class="icon-line line-long"></span>
-                                <div class="icon-circle"></div>
-                                <div class="icon-fix"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-
+            @include('user.filtered_products')
 
 
         </div>
-
-        @if(method_exists($data,'links'))
-
-        <div class="d-flex justify-content-center pagination">
-
-            {{ $data->links() }}
-
-        </div>
-        @endif
 
     </div>
 </div>
@@ -83,4 +42,79 @@
 @include('user.css')
 @include('user.scripts')
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+
+
+   document.addEventListener('DOMContentLoaded', function () {
+       // Function to disable "Add to Cart" button if product is in cart
+       function disableAddToCartButtons() {
+           let cartItems = localStorage.getItem('cartItems');
+           if (!cartItems) {
+               cartItems = [];
+           } else {
+               cartItems = JSON.parse(cartItems);
+           }
+
+           document.querySelectorAll('.cartbtn').forEach(button => {
+               let productId = button.parentElement.querySelector('input[name="productId"]').value;
+
+               if (cartItems.includes(productId)) {
+                   button.disabled = true;
+               }
+           });
+       }
+
+       // Initial disable check
+       disableAddToCartButtons();
+
+       // Event listener for filter links
+       document.querySelectorAll('.filter-link').forEach(link => {
+           link.addEventListener('click', function (e) {
+
+               e.preventDefault();
+
+               var selectedType = this.dataset.type;
+
+               $.ajax({
+                   url: '/filter-products',
+                   type: 'GET',
+                   data: { type: selectedType },
+                   success: function (response) {
+                       $('.filtered-products-container').html(response);
+                       history.pushState(null, null, '/filter-products?type=' + selectedType);
+
+                       // After updating products, re-run the disable check
+                       disableAddToCartButtons();
+
+                       console.log('I am here');
+                       addToCartButtonFunction();
+
+
+                   },
+                   error: function (xhr) {
+                       console.log(xhr.responseText);
+                   }
+               });
+           });
+       });
+
+       // Event listener for browser back button
+       window.addEventListener('popstate', function (event) {
+           // Re-run the disable check when navigating back
+           disableAddToCartButtons();
+       });
+   });
+
+
+
+
+
+
+
+
+
+
+
+</script>
