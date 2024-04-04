@@ -52,10 +52,6 @@ class AdminController extends Controller
         return response()->json(['success' => true, 'message' => 'Product saved successfully']);
     }
 
-    public function showproducts(){
-        $data = product::all();
-        return view('admin.showproducts', compact("data"));
-    }
 
     public function deleteproduct($id) {
         $data = Product::find($id);
@@ -107,10 +103,25 @@ class AdminController extends Controller
 
     }
 
-    public function showorder(){
+    public function showorder(Request $request){
 
-        $order = order::all();
-        return view('admin.home',compact('order'));
+        $searchQuery = $request->input('query');
+
+        $order = Order::when($searchQuery, function ($query) use ($searchQuery){
+            return $query->where('email', 'like', '%' . $searchQuery . '%');
+        })->get();
+
+        return view('admin.home', compact('order'));
+    }
+
+    public function showproducts(Request $request){
+
+        $searchQuery = $request->input('query');
+
+        $products = product::when($searchQuery, function ($query) use ($searchQuery){
+            return $query->where('name' , 'like', '%' . $searchQuery . '%');
+        })->get();
+        return view('admin.showproducts', compact("products"));
     }
 
 }

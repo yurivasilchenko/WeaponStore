@@ -11,6 +11,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+    background-color: #121212;
 }
 
 
@@ -78,18 +79,7 @@ a.filled-button:hover {
 	color: #fff;
 }
 
-.section-heading {
-	text-align: left;
-	margin-bottom: 60px;
-	border-bottom: 1px solid #eee;
-}
 
-.section-heading h2 {
-	font-size: 28px;
-	font-weight: 400;
-	color: #1e1e1e;
-	margin-bottom: 15px;
-}
 
 .products-heading {
 	background-image: url(../images/products-heading.jpg);
@@ -227,21 +217,21 @@ header .navbar {
 .background-header {
 	top: 0;
 	position: fixed;
-	background-color: #fff!important;
+	background-color: #232323!important;
 	box-shadow: 0px 1px 10px rgba(0,0,0,0.1);
 }
 .background-header .navbar-brand h2 {
-	color: #121212!important;
+	color: #FFFFFF!important;
 }
 .background-header .navbar-nav a.nav-link {
-	color: #1e1e1e!important;
+	color: #FFFFFF!important;
 }
 .background-header .navbar-nav .nav-link:hover,
 .background-header .navbar-nav .active>.nav-link,
 .background-header .navbar-nav .nav-link.active,
 .background-header .navbar-nav .nav-link.show,
 .background-header .navbar-nav .show>.nav-link {
-	color: #027148!important;
+    color: #FFFFFF!important;
 }
 .navbar .navbar-brand {
 	float: 	left;
@@ -432,7 +422,7 @@ header .navbar {
 }
 
 .product-item {
-	border: 1px solid #eee;
+	border: 1px solid #3B3B3B;
 	margin-bottom: 30px;
 }
 
@@ -450,7 +440,7 @@ header .navbar {
 
 .product-item .down-content h4 {
 	font-size: 17px;
-	color: #027148;
+	color: #5DB88A;
 	margin-bottom: 20px;
 }
 
@@ -459,11 +449,12 @@ header .navbar {
 	top: 30px;
 	right: 30px;
 	font-size: 18px;
-	color: #121212;
+	color: white;
 }
 
 .product-item .down-content p {
 	margin-bottom: 20px;
+    color: grey;
 }
 
 .product-item .down-content ul li {
@@ -498,6 +489,7 @@ header .navbar {
 	padding-bottom: 20px;
 }
 
+
 .about-features .container .row {
 	padding-bottom: 0px!important;
 	border-bottom: none!important;
@@ -508,7 +500,7 @@ header .navbar {
 }
 
 .best-features .container .row {
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #464646;
 	padding-bottom: 60px;
 }
 
@@ -519,8 +511,11 @@ header .navbar {
 
 .best-features h4 {
 	font-size: 17px;
-	color: #1a6692;
+	color: #5DB88A;
 	margin-bottom: 20px;
+}
+.best-features a {
+    color: #5DB88A;
 }
 
 .best-features ul.featured-list li {
@@ -530,11 +525,12 @@ header .navbar {
 
 .best-features p {
 	margin-bottom: 25px;
+    color: #EEF3F9;
 }
 
 .best-features ul.featured-list li a {
 	font-size: 14px;
-	color: #4a4a4a;
+	color: #8D8F92;
 	font-weight: 300;
 	transition: all .3s;
 	position: relative;
@@ -574,14 +570,17 @@ header .navbar {
 .call-to-action .inner-content {
 	margin-top: 60px;
 	padding: 30px;
-	background-color: #f7f7f7;
-	border-radius: 5px;
+	background-color: #232323;
+    border: 1px solid #464646;
 }
 
 .call-to-action .inner-content h4 {
 	font-size: 17px;
-	color: #1a6692;
+	color: #56B88A;
 	margin-bottom: 15px;
+}
+.call-to-action .inner-content p {
+    color: white;
 }
 
 .call-to-action .inner-content em {
@@ -608,7 +607,7 @@ footer {
 }
 
 footer .inner-content {
-	border-top: 1px solid #eee;
+	border-top: 1px solid #464646;
 	margin-top: 60px;
 	padding: 60px 0px;
 }
@@ -1087,6 +1086,7 @@ footer .inner-content p a {
     padding-left: 0;
     list-style: none;
     border-radius: 0.25rem;
+
 }
 
 .page-link {
@@ -1095,9 +1095,9 @@ footer .inner-content p a {
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #027148;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
+    color: #56B88A;
+    background-color: #272A2C;
+    border: 1px solid #8D8F92;
 }
 
 .page-link:hover {
@@ -1131,17 +1131,17 @@ footer .inner-content p a {
 
 .page-item.active .page-link {
     z-index: 1;
-    color: #fff;
+    color: white;
     background-color: #027148;
-    border-color: #027148;
+    border: 1px solid #8D8F92;
 }
 
 .page-item.disabled .page-link {
-    color: #6c757d;
+    color: #56B88A;
     pointer-events: none;
     cursor: auto;
-    background-color: #fff;
-    border-color: #dee2e6;
+    background-color: #272A2C;
+    border: 1px solid #8D8F92;
 }
 
 .pagination-lg .page-link {
@@ -1185,3 +1185,100 @@ footer .inner-content p a {
     height: 100px;
 }
 
+/*section and filter*/
+
+.form-control{
+    background-color: #232323!important;
+    border: 1px solid #464646;
+}
+
+.section-heading {
+    text-align: left;
+    margin-bottom: 60px;
+    border-bottom: 1px solid #464646;
+}
+
+.section-heading h2 {
+    font-size: 28px;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.filter-box {
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #464646;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; /* Ensure the position context for absolute positioning */
+    height: 100px; /* Set a fixed height for all boxes */
+    overflow: hidden; /* Hide overflowing content */
+}
+.filter-box img{
+    background-color: white;
+}
+
+.filter-box:hover img{
+    background-color: #027148;
+}
+
+.filter-box:hover .filter-label {
+    color: #027148;
+}
+
+.filter-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #333333;
+    transition: background-color 0.3s;
+    height: 100%;
+    padding-bottom: 20px;
+}
+.filter-box img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+}
+
+.filter-icon {
+    text-align: center;
+    width: 150px; /* Adjust the width as needed */
+
+}
+
+.filter-label,
+.filter-box img{
+    font-size: 12px; /* Adjust the font size as needed */
+    color: white;
+    margin: 5px 0 0; /* Adjust the margin as needed */
+    transition: color 0.3s; /* Add a transition for a smoother color change */
+}
+
+.filter-label {
+    font-size: 12px;
+    color: white;
+    margin: 0; /* Remove top margin */
+    position: absolute;
+    bottom: 5px; /* Distance from the bottom */
+    left: 50%; /* Center the label horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    white-space: nowrap; /* Prevent text from wrapping to a new line */
+}
+
+
+.filter-container{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 60px;
+    padding-bottom :40px;
+    border-bottom: 1px solid #464646;
+
+
+}

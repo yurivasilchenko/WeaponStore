@@ -18,7 +18,32 @@
 
     <div class="container-fluid page-body-wrapper custom-table-container">
 
+
         <div class="container text-center">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card custom-card">
+                        <div class="card-body py-0 px-0 px-sm-3">
+                            <div class="row align-items-center">
+                                <div class="col-4 col-sm-3 col-xl-2">
+                                    <img src="admin/assets/images/dashboard/Group126@2x.png" class="gradient-corona-img img-fluid" alt="">
+                                </div>
+
+                                <div class="col-3 col-sm-2 col-xl-2 ps-0 text-center">
+                                    <ul class="navbar-nav w-100">
+                                        <li class="nav-item w-100">
+                                            <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="{{route('showproducts')}}">
+                                                <input type="text" class="form-control" name="query" placeholder="Name">
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="notification" class="notification "></div>
 
             <table class="table table-striped table-bordered justify-content-center custom-table" >
@@ -39,7 +64,7 @@
                 </thead>
                 <tbody>
 
-                @foreach($data as $product)
+                @foreach($products as $product)
 
 
                 <tr>

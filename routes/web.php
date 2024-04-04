@@ -20,11 +20,11 @@ use App\Models\User;
 Route::middleware(['admin'])->group(function () {
     Route::get('/products', [AdminController::class, 'products']);
     Route::post('/uploadproduct', [AdminController::class, 'uploadproduct']);
-    Route::get('/showproducts', [AdminController::class, 'showproducts']);
+    Route::get('/showproducts', [AdminController::class, 'showproducts'])->name('showproducts');
     Route::get('/deleteproduct/{id}', [AdminController::class, 'deleteproduct'])->name('deleteproduct');
     Route::get('/updateproduct/{id}', [AdminController::class, 'updateproduct'])->name('updateproduct');
     Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])->name('updatedproduct');
-    Route::get('/showorder',[AdminController::class,'showorder']);
+    Route::get('/showorder',[AdminController::class,'showorder'])->name('showorder');
 });
 
 

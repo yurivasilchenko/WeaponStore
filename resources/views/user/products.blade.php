@@ -22,11 +22,52 @@
 
 
                 </div>
-                <a href="#" class="filter-link" data-type="A1">A1</a>
+                {{--<a href="#" class="filter-link" data-type="A1">A1</a>
                 <a href="#" class="filter-link" data-type="A2">A2</a>
                 <a href="#" class="filter-link" data-type="A3">A3</a>
                 <a href="#" class="filter-link" data-type="A4">A4</a>
-                <a href="#" class="filter-link" data-type="A5">A5</a>
+                <a href="#" class="filter-link" data-type="A5">A5</a>--}}
+                <div class="filter-container">
+                    <div class="filter-box filter-link filter-icon" data-type="A1">
+                        <div class="filter-content">
+                            <img src="assets/images/weapon-pistol.png" alt="A1">
+                            <p class="filter-label">Pistol</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-box filter-link filter-icon" data-type="A2">
+                        <div class="filter-content">
+                            <img src="assets/images/weapon-winchester.png" alt="A2">
+                            <p class="filter-label">Shotgun</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-box filter-link filter-icon" data-type="A3">
+                        <div class="filter-content">
+                            <img src="assets/images/weapon-AR.png" alt="A3">
+                            <p class="filter-label">Assault-Rifle</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-box filter-link filter-icon" data-type="A4">
+                        <div class="filter-content">
+                            <img src="assets/images/weapon-knife.png" alt="A4">
+                            <p class="filter-label">Cold Weapons</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-box filter-link filter-icon" data-type="A5">
+                        <div class="filter-content">
+                            <img src="assets/images/weapon-ammo.png" alt="A5">
+                            <p class="filter-label">Ammo</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
             </div>
             <div id="notification" class="notification"></div>
 
