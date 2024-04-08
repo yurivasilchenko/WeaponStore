@@ -124,6 +124,7 @@ class HomeController extends Controller
 
             $cart->save();
 
+
             // Return a JSON response indicating success
             return response()->json(['success' => true]);
         } else {

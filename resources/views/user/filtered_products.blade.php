@@ -20,7 +20,7 @@
                         <h6>{{$product->price}} GEL</h6>
                         <p>{{$product->description}}</p>
 
-                        <form action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name,'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
+                        <form id="addToCartForm" action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name,'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                             @csrf
                             <input type="hidden" name="productId" value="{{$product->id}}">
                             <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">

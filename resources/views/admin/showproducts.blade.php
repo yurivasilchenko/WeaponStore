@@ -72,7 +72,7 @@
                     <td>{{$product->type}}</td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->quantity}}</td>
-                    <td>{{$product->description}}</td>
+                    <td class="description-cell">{{$product->description}}</td>
                     <td class="d-flex justify-content-center align-items-center">
                         @if(!empty($product->image))
                             @php

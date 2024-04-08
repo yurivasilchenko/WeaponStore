@@ -53,30 +53,42 @@
                 @endif
             @endif
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 show-product">
             <div style="margin-top: 20px;">
-                <h2>{{ $product->name }}</h2>
+                <h1>{{ $product->name }}</h1>
+            </div>
+            <div class="price">
+                <p>Price {{ $product->price }} &#8382;</p>
             </div>
             <div>
-                <p>Price: {{ $product->price }}</p>
+                @if($product->quantity > 0)
+                    <p class="stock-status">In stock</p>
+                    <p class="quantity-left">{{ $product->quantity }} more left!</p>
+                @else
+                    <p class="stock-status">Out of stock</p>
+                @endif
             </div>
+
             <div>
-                <p>Quantity: {{ $product->quantity }}</p>
-            </div>
-            <div>
-                <form action="{{ route('addcart', ['id' => $product->id]) }}" method="POST">
+
+                <form id="addToCartForm" action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name,'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                     @csrf
-                    <input type="hidden" name="productId" value="{{ $product->id }}">
-                    <button class="btn btn-success" type="submit">Add to Cart</button>
+                    <input type="hidden" name="productId" value="{{$product->id}}">
+                    <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
                 </form>
+
+                <div class="success-checkmark">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <p>Description: {{ $product->description }}</p>
-        </div>
-    </div>
+
     <div class="row mt-4">
         <div class="col-md-12">
             <div class="row">
@@ -90,21 +102,32 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <p>Description: {{ $product->description }}</p>
+        </div>
+    </div>
 </div>
 
+@include('user.footer')
+
+@include('user.css')
+@include('user.scripts')
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
+
+
     function changeMainImage(element) {
         var mainImage = document.querySelector('.product-main-img');
         mainImage.src = element.src;
     }
+
+
 </script>
-
-
-
-
-
-
-
 
 
 <!-- Bootstrap core JavaScript -->

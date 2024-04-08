@@ -22,6 +22,7 @@
                 // Get the product ID from the button's data attribute
                 let productId = button.parentElement.querySelector('input[name="productId"]').value;
 
+
                 // Check if the product ID is already in the cartItems array
                 if (cartItems.includes(productId)) {
 
@@ -31,6 +32,7 @@
 
                 // Add click event listener to each button
                 button.addEventListener('click', function (event) {
+                    console.log('wokrs 2')
                     event.preventDefault(); // Prevent the default click behavior
 
 
@@ -41,9 +43,8 @@
                     // Check if the user is authenticated
                     if (!authCheck()) {
                         // If the user is not authenticated, redirect to login
-                        window.location.href = 'login';
-                        console.log('wokrs2')
-                        return;
+                        window.location.href = '/login'; // Use absolute path
+                        return; // This ends the execution of the function
                     }
 
                     // Add the product ID to the cartItems array
@@ -53,10 +54,13 @@
                     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
                     // Find the parent product-item of the clicked button
-                    let productItem = this.closest('.product-item');
+                    /*let productItem = this.closest('.product-item');*/
+                    let productItem = this.closest('.col-md-4');
+                    console.log(productItem);
 
                     // Submit the form using AJAX
                     let form = this.closest('form');
+                    console.log(form);
                     fetch(form.action, {
                         method: 'POST',
                         body: new FormData(form)
@@ -68,6 +72,7 @@
                     }).then(data => {
                         // Show the checkmark animation for this product-item if it exists
                         let checkmark = productItem.querySelector('.success-checkmark');
+                        console.log(checkmark)
                         if (checkmark) {
                             checkmark.style.display = 'block';
                         }
@@ -84,7 +89,7 @@
 
 
                         // Redirect to login if the user is not authenticated
-                        window.location.href = 'login';
+                        window.location.href = '/login';
                     });
                 });
             });
@@ -112,10 +117,6 @@
                 });
         }
     }
-
-
-
-
 
 
 

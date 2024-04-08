@@ -20916,6 +20916,12 @@ div.tagsinput {
     background-color: #e1e1e1; /* Background color for odd rows */
 }
 
+.description-cell {
+    max-width: 200px; /* Adjust the max-width as needed */
+    white-space: nowrap;
+    overflow: auto; /* Add scrolling */
+}
+
 .btn-warning{
     background-color:#3d4872!important;
     border-color: #3d4872!important;
@@ -20942,4 +20948,6 @@ div.tagsinput {
 .custom-wrapper{
     -webkit-box-shadow: 20px 19px 34px -15px rgba(0, 0, 0, 0.5);
 }
+
+/*description cells*/
 

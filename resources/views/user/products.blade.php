@@ -22,11 +22,7 @@
 
 
                 </div>
-                {{--<a href="#" class="filter-link" data-type="A1">A1</a>
-                <a href="#" class="filter-link" data-type="A2">A2</a>
-                <a href="#" class="filter-link" data-type="A3">A3</a>
-                <a href="#" class="filter-link" data-type="A4">A4</a>
-                <a href="#" class="filter-link" data-type="A5">A5</a>--}}
+
                 <div class="filter-container">
                     <div class="filter-box filter-link filter-icon" data-type="A1">
                         <div class="filter-content">
@@ -88,66 +84,6 @@
 <script>
 
 
-   /*document.addEventListener('DOMContentLoaded', function () {
-       // Function to disable "Add to Cart" button if product is in cart
-       function disableAddToCartButtons() {
-           let cartItems = localStorage.getItem('cartItems');
-           if (!cartItems) {
-               cartItems = [];
-           } else {
-               cartItems = JSON.parse(cartItems);
-           }
-
-           document.querySelectorAll('.cartbtn').forEach(button => {
-               let productId = button.parentElement.querySelector('input[name="productId"]').value;
-
-               if (cartItems.includes(productId)) {
-                   button.disabled = true;
-               }
-           });
-       }
-
-       // Initial disable check
-       disableAddToCartButtons();
-
-       // Event listener for filter links
-       document.querySelectorAll('.filter-link').forEach(link => {
-           link.addEventListener('click', function (e) {
-
-               e.preventDefault();
-
-               var selectedType = this.dataset.type;
-
-               $.ajax({
-                   url: '/filter-products',
-                   type: 'GET',
-                   data: { type: selectedType },
-                   success: function (response) {
-                       $('.filtered-products-container').html(response);
-                       history.pushState(null, null, '/filter-products?type=' + selectedType);
-
-                       // After updating products, re-run the disable check
-                       disableAddToCartButtons();
-
-                       console.log('I am here');
-                       addToCartButtonFunction();
-
-
-                   },
-                   error: function (xhr) {
-                       console.log(xhr.responseText);
-                   }
-               });
-           });
-       });
-
-       // Event listener for browser back button
-       window.addEventListener('popstate', function (event) {
-           // Re-run the disable check when navigating back
-           disableAddToCartButtons();
-       });
-   });
-*/
 
 
    document.addEventListener('DOMContentLoaded', function () {
