@@ -43,6 +43,9 @@ class AdminController extends Controller
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
+        $data->specs = $request->input('specs'); //this one
+
+
 
         $data->save();
 
@@ -93,6 +96,7 @@ class AdminController extends Controller
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
+        $data->specs = json_encode($request->input('specs')); //this one
 
 
         $data->save();
@@ -121,7 +125,15 @@ class AdminController extends Controller
         $products = product::when($searchQuery, function ($query) use ($searchQuery){
             return $query->where('name' , 'like', '%' . $searchQuery . '%');
         })->get();
+
+
+
+
+
         return view('admin.showproducts', compact("products"));
     }
+
+
+
 
 }

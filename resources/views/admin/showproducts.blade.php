@@ -16,6 +16,8 @@
     <!-- partial -->
     @include('admin.navbar')
 
+
+
     <div class="container-fluid page-body-wrapper custom-table-container">
 
 
@@ -56,6 +58,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Description</th>
+                    <th>Specs</th>
                     <th>Image</th>
                     <th>Update</th>
                     <th>Delete</th>
@@ -73,6 +76,25 @@
                     <td>{{$product->price}}</td>
                     <td>{{$product->quantity}}</td>
                     <td class="description-cell">{{$product->description}}</td>
+                    <td class="description-cell">
+
+
+                        @php
+                            $decodedSpecs = json_decode($product->specs, true);
+
+                      $specs =  \App\Http\Controllers\HelperController::parseTree($decodedSpecs);
+
+                        @endphp
+
+                        <ul>
+                            @foreach($specs as $spec)
+                                <li>{{ key($spec) }}: {{ current($spec) }}</li>
+                            @endforeach
+                        </ul>
+
+
+
+                    </td>
                     <td class="d-flex justify-content-center align-items-center">
                         @if(!empty($product->image))
                             @php

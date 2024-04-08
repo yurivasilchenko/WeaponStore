@@ -108,6 +108,20 @@
             <p>Description: {{ $product->description }}</p>
         </div>
     </div>
+
+    @php
+        $decodedSpecs = json_decode($product->specs, true);
+
+  $specs =  \App\Http\Controllers\HelperController::parseTree($decodedSpecs);
+
+    @endphp
+
+    <ul>
+        @foreach($specs as $spec)
+            <li>{{ key($spec) }}: {{ current($spec) }}</li>
+        @endforeach
+    </ul>
+
 </div>
 
 @include('user.footer')

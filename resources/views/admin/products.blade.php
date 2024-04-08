@@ -64,6 +64,10 @@
                         <label for="desc">Description</label>
                         <textarea type="text" class="form-control" id="desc" name="desc" rows="4" placeholder="Enter a detailed product description" required></textarea>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="specs">Specifications</label>
+                        <textarea type="text" class="form-control" id="specs" name="specs" rows="4" placeholder="Enter product specifications in JSON format"></textarea>
+                    </div>
 
 
 
