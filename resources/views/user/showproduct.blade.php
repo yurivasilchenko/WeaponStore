@@ -103,12 +103,6 @@
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <p>Description: {{ $product->description }}</p>
-        </div>
-    </div>
-
     @php
         $decodedSpecs = json_decode($product->specs, true);
 
@@ -117,11 +111,33 @@
     @endphp
 
     <ul>
-        @foreach($specs as $spec)
-            <li>{{ key($spec) }}: {{ current($spec) }}</li>
-        @endforeach
+
     </ul>
 
+</div>
+
+<div class="best-features">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading custom-section-heading">
+                    <h2>About {{$product->name}}</h2>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="left-content custom-section-heading">
+
+                    <p>{{$product->description}}</p>
+                    <p>Product Specs:</p>
+                    <ul class="custom-featured-list">
+                        @foreach($specs as $spec)
+                            <li><a>{{ key($spec) }}: {{ current($spec) }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @include('user.footer')

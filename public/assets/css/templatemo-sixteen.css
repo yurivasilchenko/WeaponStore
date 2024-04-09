@@ -561,6 +561,36 @@ header .navbar {
 	margin-top: 20px;
 }
 
+/* custom featured list*/
+
+.best-features ul.custom-featured-list li {
+    display: block;
+    margin-bottom: 10px;
+}
+.best-features ul.custom-featured-list li a {
+    font-size: 16px;
+    color: #5DB88A;
+    font-weight: 300;
+    transition: all .3s;
+    position: relative;
+    padding-left: 13px;
+}
+
+.best-features ul.custom-featured-list li a:before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+    background-color: #4a4a4a;
+    position: absolute;
+    left: 0;
+    transition: all .3s;
+    top: 8px;
+}
+
+.best-features ul.custom-featured-list li a:hover {
+    color: #5DB88A; /* Set the hover color to be the same as the normal color */
+}
 
 
 
@@ -1205,6 +1235,19 @@ footer .inner-content p a {
     font-weight: 400;
     color: white;
     margin-bottom: 15px;
+}
+.custom-section-heading{
+    width: 150%;
+}
+.custom-section-heading h2{
+    color: #5DB88A;
+}
+
+.custom-section-heading p{
+    font-size: 18px;
+    font-weight: 300;
+
+
 }
 
 .filter-box {
