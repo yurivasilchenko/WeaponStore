@@ -39,7 +39,9 @@
 
 <!--Header end -->
 
-<div class="container mt-4">
+
+
+<div class="container mt-4 container-cart">
     <div class="d-flex justify-content-center">
         <form action="{{url('order')}}" method="POST">
 
@@ -71,15 +73,11 @@
                     </td>
 
 
-
-
-
                     <td class="align-middle">
-                        <input type="number" name="quantity[]" value="1" min="1" step="1">
-                        {{$carts->quantity}}
+                        <div class="table-quantity">
+                            <input type="number" name="quantity[]" value="1" min="1" step="1">
+                        </div>
                     </td>
-
-
 
 
                     <td class="align-middle">
@@ -124,9 +122,15 @@
             </div>
 
         </form>
+
+
+
     </div>
 </div>
 
+
+
+@include('user.footer')
 
 
 <!-- Bootstrap core JavaScript -->
@@ -156,5 +160,16 @@
 @include('user.cart-scripts')
 
 </body>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <h2>Your order has been placed!</h2>
+        <p>We will contact you via email or phone! Also, if you have any questions, you can contact us first!</p>
+        <p>Thanks for choosing us!</p>
+        <button id="modalOkButton" class="btn btn-success">OK</button>
+    </div>
+</div>
+
+
 
 </html>

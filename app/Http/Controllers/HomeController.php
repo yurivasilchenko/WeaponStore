@@ -66,6 +66,14 @@ class HomeController extends Controller
     public function search(Request $request){
 
         $search = $request->search;
+        $count = 0; // Default count if user is not authenticated
+
+        if (auth()->check()) {
+            $user = auth()->user();
+            $count = cart::where('email', $user->email)->count();
+        }
+
+
 
         if($search==""){
             $data = product::paginate('12');
@@ -75,7 +83,7 @@ class HomeController extends Controller
 
         $data = product::where('name','like', '%' . $search . '%')->get();
 
-        return view('user.home',compact('data'));
+        return view('user.home',compact('data','count'));
 
     }
 
@@ -83,7 +91,13 @@ class HomeController extends Controller
     public function filterProducts(Request $request)
     {
         $type = $request->input('type');
-        $filteredProducts = Product::where('type', $type)->paginate(10);
+
+        if($type == 'All'){
+            $filteredProducts = Product::paginate(10);
+        } else{
+            $filteredProducts = Product::where('type', $type)->paginate(10);
+        }
+
 
         $count = 0; // Default count if user is not authenticated
         if (auth()->check()) {

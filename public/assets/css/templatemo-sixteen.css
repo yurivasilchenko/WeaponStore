@@ -734,6 +734,12 @@ footer .inner-content p a {
 	padding: 30px;
 	text-align: center;
 }
+p.description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%; /* Adjust this value as needed */
+}
 
 .team-member .thumb-container {
 	position: relative;
@@ -1370,7 +1376,265 @@ footer .inner-content p a {
 }
 
 
+
+
+.price p {
+    color: #027148!important;
+    font-size: 2.4rem;
+}
+
+
+/* check mark css*/
+.success-checkmark {
+    display: none; /* Hide the checkmark initially */
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    font-size: 13px;
+    color: #027148;
+    font-weight: 500;
+}
+
+.check-icon {
+    width: 56px; /* 80px - 30% */
+    height: 56px; /* 80px - 30% */
+    position: relative;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 4px solid #4CAF50;
+
+    &::before {
+        top: 2px; /* 3px - 30% */
+        left: -1px; /* -2px - 30% */
+        width: 21px; /* 30px - 30% */
+        transform-origin: 100% 50%;
+        border-radius: 70px 0 0 70px;
+    }
+
+    &::after {
+        top: 0;
+        left: 21px; /* 30px - 30% */
+        width: 42px; /* 60px - 30% */
+        transform-origin: 0 50%;
+        border-radius: 0 70px 70px 0;
+        animation: rotate-circle 4.25s ease-in;
+    }
+
+    &::before, &::after {
+        content: '';
+        height: 70px; /* 100px - 30% */
+        position: absolute;
+        background: #121212;
+        transform: rotate(-45deg);
+    }
+
+    .icon-line {
+        height: 3.5px; /* 5px - 30% */
+        background-color: #4CAF50;
+        display: block;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+
+        &.line-tip {
+            top: 32px; /* 46px - 30% */
+            left: 9.8px; /* 14px - 30% */
+            width: 17.5px; /* 25px - 30% */
+            transform: rotate(45deg);
+            animation: icon-line-tip 0.75s;
+        }
+
+        &.line-long {
+            top: 26.6px; /* 38px - 30% */
+            right: 5.6px; /* 8px - 30% */
+            width: 32.9px; /* 47px - 30% */
+            transform: rotate(-45deg);
+            animation: icon-line-long 0.75s;
+        }
+    }
+
+    .icon-circle {
+        top: -2px; /* -4px - 30% */
+        left: -2px; /* -4px - 30% */
+        z-index: 10;
+        width: 56px; /* 80px - 30% */
+        height: 56px; /* 80px - 30% */
+        border-radius: 50%;
+        position: absolute;
+        box-sizing: content-box;
+        border: 4px solid rgba(76, 175, 80, .5);
+    }
+
+    .icon-fix {
+        top: 5.6px; /* 8px - 30% */
+        width: 3.5px; /* 5px - 30% */
+        left: 18.2px; /* 26px - 30% */
+        z-index: 1;
+        height: 59.5px; /* 85px - 30% */
+        position: absolute;
+        transform: rotate(-45deg);
+        background-color: #121212;
+    }
+}
+
+@keyframes rotate-circle {
+    0% {
+        transform: rotate(-45deg);
+    }
+    5% {
+        transform: rotate(-45deg);
+    }
+    12% {
+        transform: rotate(-405deg);
+    }
+    100% {
+        transform: rotate(-405deg);
+    }
+}
+
+@keyframes icon-line-tip {
+    0% {
+        width: 0;
+        left: 0.7px; /* 1px - 30% */
+        top: 13.3px; /* 19px - 30% */
+    }
+    54% {
+        width: 0;
+        left: 0.7px; /* 1px - 30% */
+        top: 13.3px; /* 19px - 30% */
+    }
+    70% {
+        width: 35px; /* 50px - 30% */
+        left: -5.6px; /* -8px - 30% */
+        top: 25.9px; /* 37px - 30% */
+    }
+    84% {
+        width: 11.9px; /* 17px - 30% */
+        left: 14.7px; /* 21px - 30% */
+        top: 33.6px; /* 48px - 30% */
+    }
+    100% {
+        width: 17.5px; /* 25px - 30% */
+        left: 9.8px; /* 14px - 30% */
+        top: 31.5px; /* 45px - 30% */
+    }
+}
+
+@keyframes icon-line-long {
+    0% {
+        width: 0;
+        right: 32.2px; /* 46px - 30% */
+        top: 37.8px; /* 54px - 30% */
+    }
+    65% {
+        width: 0;
+        right: 32.2px; /* 46px - 30% */
+        top: 37.8px; /* 54px - 30% */
+    }
+    84% {
+        width: 38.5px; /* 55px - 30% */
+        right: 0px;
+        top: 24.5px; /* 35px - 30% */
+    }
+    100% {
+        width: 33px; /* 47px - 30% */
+        right: 5.6px; /* 8px - 30% */
+        top: 26.6px; /* 38px - 30% */
+    }
+}
+
+/*
+Cart Css*/
+
+
+
+
+.table {
+    color:white;
+
+}
+.table thead th {
+    padding: 50px; /* Add padding to all sides of the table headers */
+
+}
+.table tbody td {
+    /* Add padding to all sides of the table headers */
+    padding: 20px 50px 50px;
+
+}
+
+/* Or, if you prefer margin instead of padding */
+
+
+.table-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.table-quantity input[type="number"] {
+    width: 50px;
+    color: black;
+    margin-right: 5px;
+}
+
+
+
+.container-cart{
+    width: 100%;
+    max-width: 1200px; /* Set the maximum width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding around the container */
+}
+
+.showcart-footer {
+    margin-top: 20px; /* Add some margin to the top of the footer */
+    text-align: center; /* Center the content in the footer */
+}
+
+
+
 /*
 Admin*/
+
+
+/* Modal styles */
+
+
+
+
+/* Modal */
+
+/* The Modal (background) */
+
+
+.modal-content {
+    background-color: #232323;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+}
+
+.modal-content h2 {
+    color: white;
+    margin-bottom: 20px; /* Add some space below the h2 */
+}
+
+.modal-content p {
+    color: white;
+    margin-bottom: 10px; /* Add space between paragraphs */
+}
+
+#modalOkButton {
+    margin-top: auto; /* Push the button to the bottom */
+    padding: 10px 20px;
+    cursor: pointer;
+    color: white;
+    border: none;
+}
 
 

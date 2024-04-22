@@ -54,12 +54,15 @@
             @endif
         </div>
         <div class="col-md-4 show-product">
-            <div style="margin-top: 20px;">
-                <h1>{{ $product->name }}</h1>
+            <div class="product-info">
+                <div>
+                    <h1>{{ $product->name }}</h1>
+                </div>
+                <div class="price">
+                    <p>{{ $product->price }}&#8382;</p>
+                </div>
             </div>
-            <div class="price">
-                <p>Price {{ $product->price }} &#8382;</p>
-            </div>
+
             <div>
                 @if($product->quantity > 0)
                     <p class="stock-status">In stock</p>
@@ -142,7 +145,6 @@
 
 @include('user.footer')
 
-@include('user.css')
 @include('user.scripts')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

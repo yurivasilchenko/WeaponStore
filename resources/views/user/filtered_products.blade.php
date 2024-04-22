@@ -18,7 +18,7 @@
                     <div class="down-content">
                         <a href="{{route('showproduct', ['id' => $product->id])}}"><h4>{{$product->name}}</h4></a>
                         <h6>{{$product->price}} GEL</h6>
-                        <p>{{$product->description}}</p>
+                        <p class="description">{{$product->description}}</p>
 
                         <form id="addToCartForm" action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name,'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                             @csrf

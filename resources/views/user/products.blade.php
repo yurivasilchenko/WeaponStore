@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="section-heading">
                     <h2>Latest Products</h2>
-                    <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
+                    <a href="#">view all products <i class="fa fa-angle-right"></i></a>
 
                     <form action="{{url('search')}}" method="get"  class="form-inline mt-3 p-4 ml-auto ">
 
@@ -24,6 +24,13 @@
                 </div>
 
                 <div class="filter-container">
+                    <div class="filter-box filter-link filter-icon" data-type="All">
+                        <div class="filter-content">
+                            <img src="assets/images/All.png" alt="All">
+                            <p class="filter-label">All</p>
+                        </div>
+                    </div>
+
                     <div class="filter-box filter-link filter-icon" data-type="A1">
                         <div class="filter-content">
                             <img src="assets/images/weapon-pistol.png" alt="A1">
@@ -76,7 +83,7 @@
     </div>
 </div>
 
-@include('user.css')
+
 @include('user.scripts')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
