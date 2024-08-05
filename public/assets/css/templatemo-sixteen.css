@@ -233,11 +233,7 @@ header .navbar {
 .background-header .navbar-nav .show>.nav-link {
     color: #FFFFFF!important;
 }
-.navbar .navbar-brand {
-	float: 	left;
-	margin-top: -12px;
-	outline: none;
-}
+
 .navbar .navbar-brand h2 {
 	color: #fff;
 	text-transform: uppercase;
@@ -248,6 +244,7 @@ header .navbar {
     -o-transition: all .3s ease 0s;
     transition: all .3s ease 0s;
 }
+
 .navbar .navbar-brand h2 em {
 	font-style: normal;
 	color: #027148;
@@ -269,15 +266,38 @@ header .navbar {
 	color: #fff;
 	transition: all 0.5s;
 	margin-top: 5px;
+    border-bottom: 3px solid transparent; /* Add this line */
 }
-.navbar .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .active>.nav-link,
-.navbar .navbar-nav .nav-link.active,
-.navbar .navbar-nav .nav-link.show,
-.navbar .navbar-nav .show>.nav-link {
-	color: #fff;
-	padding-bottom: 25px;
-	border-bottom: 3px solid #027148;
+
+
+.navbar .navbar-nav .nav-link {
+    text-transform: capitalize;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #fff;
+    transition: all 0.5s;
+    margin-top: 5px;
+    position: relative;
+}
+
+.navbar .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: #027148;
+    transition: width 0.3s;
+}
+
+.navbar .navbar-nav .nav-link:hover::after,
+.navbar .navbar-nav .active>.nav-link::after,
+.navbar .navbar-nav .nav-link.active::after,
+.navbar .navbar-nav .nav-link.show::after,
+.navbar .navbar-nav .show>.nav-link::after {
+    width: 100%;
 }
 .navbar .navbar-toggler-icon {
 	background-image: none;
@@ -1114,7 +1134,7 @@ p.description {
 
 .cartbtn,
 .searchbtn{
-    background-color: #027148;
+    background-color: transparent;
 }
 .pagination {
     display: -ms-flexbox;
@@ -1394,7 +1414,10 @@ p.description {
     color: #027148;
     font-weight: 500;
 }
-
+.success-checkmark-product{
+    right: auto!important;
+    margin-left: 10px;
+}
 .check-icon {
     width: 56px; /* 80px - 30% */
     height: 56px; /* 80px - 30% */
@@ -1545,7 +1568,26 @@ p.description {
 
 /*
 Cart Css*/
-
+.nav-cart-count >a{
+    display: flex;
+    align-items: center;
+}
+.nav-cart-count  .fa-shopping-cart{
+    margin-right: 8px;
+}
+.counter-count{
+    display: flex;
+    align-items:center;
+    margin-left: 5px;
+    width: 40px;
+}
+.cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width:25px;
+}
 
 
 
@@ -1554,17 +1596,38 @@ Cart Css*/
 
 }
 .table thead th {
-    padding: 50px; /* Add padding to all sides of the table headers */
+    padding: 30px; /* Add padding to all sides of the table headers */
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle; /* Center content vertically */
+    text-align: center; /* Center content horizontally */
 
 }
 .table tbody td {
-    /* Add padding to all sides of the table headers */
-    padding: 20px 50px 50px;
+padding: 25px 25px 25px;
+align-items: center;
+vertical-align: middle; /* Center content vertically */
+text-align: center; /* Center content horizontally */
 
 }
+.custom-number-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.table tbody td img {
+    display: block; /* Set image to display as a block element */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+
 
 /* Or, if you prefer margin instead of padding */
 
+.table-quantity a {
+    margin-right: 10px; /* Add margin to the right of the <a> element */
+}
 
 .table-quantity {
     display: flex;
@@ -1578,23 +1641,126 @@ Cart Css*/
 }
 
 
-
-.container-cart{
+.container-cart {
     width: 100%;
-    max-width: 1200px; /* Set the maximum width of the container */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Add some padding around the container */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+
 }
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th {
+    color:rgba(255,255,255,0.7);
+    padding: 8px;
+    text-align: left;
+    border-top: none;
+}
+.table td{
+    color:rgba(255,255,255,0.7);
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+
+.table-quantity input {
+    width: 60px; /* Adjust input width */
+}
+
+.showcart-footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
 
 .showcart-footer {
     margin-top: 20px; /* Add some margin to the top of the footer */
     text-align: center; /* Center the content in the footer */
 }
 
+.empty h2{
+    color:rgba(255,255,255,0.7);
+    font-size: 25px;
+    margin-top: 25px;
+}
+.custom-row-flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+}
+
+.empty-space {
+    flex: 0 0 60%;
+    max-width: 60%;
+}
+
+.custom-col-md-4 {
+    flex: 0 0 20%;
+    max-width: 20%;
+    text-align: right;
+}
+.total-price {
+    text-align: center;
+
+}
+
+.showcart-btn{
+
+    flex: 0 0 20%;
+    max-width: 20%;
+    text-align: center;
+}
+
+.custom-number-input {
+    display: flex;
+    align-items: center;
+}
+
+.custom-number-input input[type="number"] {
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 50px;
+    text-align: center;
+    margin: 0 5px; /* Add some margin between the input and buttons */
+}
+
+.custom-number-input div {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 5px;
+}
+
+.custom-number-input div:hover {
+    color: lightgray;
+}
+
+/* Hide the default number input arrows */
+.custom-number-input input[type="number"]::-webkit-inner-spin-button,
+.custom-number-input input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.custom-number-input input[type="number"] {
+    /* Firefox */
+    -moz-appearance: textfield;
+}
 
 
-/*
-Admin*/
+
+    /*
+    Admin*/
 
 
 /* Modal styles */

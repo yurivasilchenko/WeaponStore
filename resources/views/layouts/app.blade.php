@@ -26,11 +26,19 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <header class="shadow bg-customBlack pt-4">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 bg-customBlack">
+                        <h2 class="font-semibold text-xl text-customGreen leading-tight">
+                            {{ __('Profile') }}
+                        </h2>
                     </div>
+
                 </header>
+                <div class="hidden sm:block">
+                    <div class="bg-customBlack">
+                        <div class="border-t border-white"></div>
+                    </div>
+                </div>
             @endif
 
             <!-- Page Content -->

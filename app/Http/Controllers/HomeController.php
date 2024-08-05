@@ -107,7 +107,7 @@ class HomeController extends Controller
 
         if ($request->ajax()) {
             // Return the partial view with the filtered products
-            return response()->view('user.filtered_products', ['data' => $filteredProducts, 'count' => $count])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+            return response()->view('user.filtered_products_content', ['data' => $filteredProducts, 'count' => $count])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
         } else {
             // Return the full view with layout
             return view('user.home', ['data' => $filteredProducts, 'count' => $count]);
@@ -148,14 +148,19 @@ class HomeController extends Controller
         }
     }
 
-    public function showcart(){
+    public function showcart()
+    {
+        if (!auth()->check()) {
+            return redirect('redirect');
+        }
 
         $user = auth()->user();
-        $cart = cart::where('email',$user->email)->get();
-        $count = cart::where('email',$user->email)->count();
+        $cart = cart::where('email', $user->email)->get();
+        $count = cart::where('email', $user->email)->count();
 
-        return view('user.showcart',compact('count','cart'));
+        return view('user.showcart', compact('count', 'cart'));
     }
+
     public function updatecartcount()
     {
         $user = auth()->user();

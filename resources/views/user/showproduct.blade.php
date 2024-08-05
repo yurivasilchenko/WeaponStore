@@ -73,21 +73,28 @@
             </div>
 
             <div>
-
                 <form id="addToCartForm" action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name,'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                     @csrf
-                    <input type="hidden" name="productId" value="{{$product->id}}">
-                    <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <input type="hidden" name="productId" value="{{$product->id}}">
+                            <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
+                        </div>
+                        <div class="ml-2">
+                            <div class="success-checkmark success-checkmark-product">
+                                <div class="check-icon">
+                                    <span class="icon-line line-tip"></span>
+                                    <span class="icon-line line-long"></span>
+                                    <div class="icon-circle"></div>
+                                    <div class="icon-fix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
-                <div class="success-checkmark">
-                    <div class="check-icon">
-                        <span class="icon-line line-tip"></span>
-                        <span class="icon-line line-long"></span>
-                        <div class="icon-circle"></div>
-                        <div class="icon-fix"></div>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>

@@ -7,10 +7,11 @@
             </button>
             <div class="" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home
+                    <li class="nav-item {{ request()->route()->uri === 'redirect' ? ' active' : '' }}">
+                        <a class="nav-link " href="/">Home
                             <span class="sr-only">(current)</span>
                         </a>
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Our Products</a>
@@ -22,29 +23,18 @@
                         <a class="nav-link" href="#">Contact Us</a>
                     </li>
 
-
-
-
                     @if (Route::has('login'))
 
                         @auth
-{{--
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('showcart')}}">
-                                    <i class="fas fa-shopping-cart"></i> My Cart <span class="cart-count">[{{$count}}]</span>
-                                </a>
-                            </li>--}}
-                            <li class="nav-item">
+
+                            <li class="nav-item nav-cart-count {{ request()->route()->uri === 'showcart' ? ' active' : '' }}">
                                 <a class="nav-link" href="{{ url('showcart') }}">
-                                    <i class="fas fa-shopping-cart"></i> My Cart <span class="cart-count">[{{$count}}]</span>
+                                    <i class="fas fa-shopping-cart"></i> My Cart <div class="counter-count">[<span class="cart-count"> {{$count}} </span>]</div>
                                 </a>
                             </li>
 
-
-
-
-
                             <li class="nav-item">
+
 
                                 <x-app-layout>
 

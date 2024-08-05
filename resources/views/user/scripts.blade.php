@@ -109,7 +109,7 @@
                 .then(data => {
                     let cartCountElement = document.querySelector('.cart-count');
                     if (cartCountElement) {
-                        cartCountElement.textContent = '[' + data.count + ']';
+                        cartCountElement.textContent = data.count;
                     }
                 })
                 .catch(error => {

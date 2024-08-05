@@ -1,6 +1,6 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper custom-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="navbar-brand custom-brand" href="/"><h2>Weapon <em>Store</em></h2></a>
+        <a class="navbar-brand custom-brand" href="/"><h2>WS</h2></a>
     </div>
     <ul class="nav custom-navigation">
 

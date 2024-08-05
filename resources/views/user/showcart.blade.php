@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 
@@ -42,87 +43,106 @@
 
 
 <div class="container mt-4 container-cart">
-    <div class="d-flex justify-content-center">
-        <form action="{{url('order')}}" method="POST">
+    <div class="justify-content-center">
+        @if($cart->isEmpty())
+            <div class="text-center empty">
+                <h2>Your cart is empty!</h2>
+                <div class="d-flex justify-content-center">
+                    <!-- Add your icon here -->
+                    <img src="assets/images/empty.png" alt="A2">
+                </div>
+            </div>
+        @else
+        <form action="{{url('order')}}" method="POST" class="cart-form">
+            @csrf
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Product Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col">Image</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @csrf
+                    @foreach($cart as $carts)
+                        <tr>
+
+                            <td class="align-middle">
+                                <input type="text" name="image[]" value="{{$carts->image}}" hidden="">
+                                @if(!empty($carts->image))
+                                    @php
+                                        $images = json_decode($carts->image);
+                                        $firstImage = isset($images[0]) ? $images[0] : null;
+                                    @endphp
+                                    @if(!empty($firstImage))
+                                        <img height="100px" width="100px" src="/productimages/{{$firstImage}}">
+                                    @endif
+                                @endif
+                            </td>
+                            <td class="align-middle">
+                                <input type="text" name="product_name[]" value="{{$carts->product_name}}" hidden="">
+                                {{$carts->product_name}}
+                            </td>
+                            <td class="align-middle" style="display: none;">
+                                <input type="text" name="type[]" value="{{$carts->type}}">
+                                {{$carts->type}}
+                            </td>
+                            <td class="align-middle">
+                                <div class="custom-number-input">
+                                    <div class="decrement">-</div>
+                                    <input type="number" name="quantity[]" value="1" min="1" step="1">
+                                    <div class="increment">+</div>
+                                </div>
+                            </td>
 
 
-               @csrf
+                            <td class="align-middle">
+                                <input type="text" name="price[]" value="{{$carts->price}}" hidden="">
+                                <span class="price-display" data-price="{{$carts->price}}">{{$carts->price}}</span>
+                                <a>  &#8382;</a>
+                            </td>
 
-            @foreach($cart as $carts)
-                <tr>
-                    <td class="align-middle">
-                        <input type="text" name="product_name[]" value="{{$carts->product_name}}" hidden="">
-                        {{$carts->product_name}}
-                    </td>
+                            <td class="align-middle">
+                                <a class="btn btn-danger deletebtn" href="{{url('delete',$carts->id)}}" data-product-id="{{$carts->id}}">Delete</a>
+                            </td>
 
-                    <td class="align-middle" style="display: none;">
-                        <input type="text" name="type[]" value="{{$carts->type}}">
-                        {{$carts->type}}
-                    </td>
-
-
-                    <td class="align-middle">
-                        <div class="table-quantity">
-                            <input type="number" name="quantity[]" value="1" min="1" step="1">
-                        </div>
-                    </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
 
 
-                    <td class="align-middle">
-                        <input type="text" name="price[]" value="{{$carts->price}}" hidden="">
-                        {{$carts->price}}
-                    </td>
 
-                    <td class="text-center align-middle">
-                        <input type="text" name="image[]" value="{{$carts->image}}" hidden="">
+            <div class="row custom-row-flex">
+                <div class="empty-space"></div>
+                <div class="custom-col-md-4">
+                    <div>Total price :</div>
+                </div>
+                <div class="custom-col-md-4 total-price">
+                    <div><span id="totalPrice"></span> &#8382;</div>
+                </div>
+            </div>
 
-                        @if(!empty($carts->image))
-                            @php
-                                $images = json_decode($carts->image);
-                                $firstImage = isset($images[0]) ? $images[0] : null;
-                            @endphp
 
-                            @if(!empty($firstImage))
-                                <img height="100px" width="100px" src="/productimages/{{$firstImage}}">
-                            @endif
-                        @endif
 
-                    </td>
 
-                    <td class="align-middle">
-                        <a class="btn btn-danger deletebtn" href="{{url('delete',$carts->id)}}" data-product-id="{{$carts->id}}">Delete</a>
-                    </td>
 
-                </tr>
-            @endforeach
-
-            </tbody>
-        </table>
-
+            <!-- Place an Order button -->
             <div class="container showcart-footer">
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="row justify-content-end">
+                    <div class="showcart-btn text-right">
                         <div class="inner-content">
                             <button class="btn btn-success">Place an Order</button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </form>
-
+        @endif
 
 
     </div>
@@ -155,6 +175,9 @@
             t.style.color='#fff';
         }
     }
+
+
+
 </script>
 
 @include('user.cart-scripts')
