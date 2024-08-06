@@ -55,11 +55,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="inner-content">
-                    <p>Copyright &copy; 2023 Weapon Store Co., Ltd.
-
-                        - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+                    <p>Made by best developer - <a>Yuri Vasilchenko</a></p>
+                    <p class="attribution" style="display: none;">
+                        <a href="https://www.flaticon.com/free-icons/empty-cart" title="empty cart icons">Empty cart icons created by kerismaker - Flaticon</a>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
+<script>
+    // Check if the URL contains "showcart"
+    if (window.location.href.includes("showcart")) {
+        // Show the attribution paragraph
+        document.querySelector('.attribution').style.display = 'block';
+    }
+</script>
+

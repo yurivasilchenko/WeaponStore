@@ -60,6 +60,10 @@
                         <label for="desc">Description</label>
                         <textarea type="text" class="form-control" id="desc" name="desc" rows="4" required>{{$data->description}}</textarea>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="specs">Specifications</label>
+                        <textarea type="text" class="form-control" id="specs" name="specs" rows="4" required>{{$data->specs}}</textarea>
+                    </div>
 
                     <div class="form-group col-md-4">
                         <label>Old Image</label>

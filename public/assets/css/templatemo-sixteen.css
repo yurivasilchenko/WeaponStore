@@ -666,8 +666,8 @@ footer .inner-content p {
 	text-transform: uppercase;
 }
 
-footer .inner-content p a {
-	color: #027148;
+footer .inner-content a {
+	color: #027148!important;
 	margin-left: 3px;
 }
 
