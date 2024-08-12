@@ -232,56 +232,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 col-xl-4 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">To do list</h4>
-                            <div class="add-items d-flex">
-                                <input type="text" class="form-control todo-list-input" placeholder="enter task..">
-                                <button class="add btn btn-primary todo-list-add-btn">Add</button>
-                            </div>
-                            <div class="list-wrapper">
-                                <ul class="d-flex flex-column-reverse text-white todo-list todo-list-custom">
-                                    <li>
-                                        <div class="form-check form-check-primary">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox"> Create invoice </label>
-                                        </div>
-                                        <i class="remove mdi mdi-close-box"></i>
-                                    </li>
-                                    <li>
-                                        <div class="form-check form-check-primary">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox"> Meeting with Alita </label>
-                                        </div>
-                                        <i class="remove mdi mdi-close-box"></i>
-                                    </li>
-                                    <li class="completed">
-                                        <div class="form-check form-check-primary">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox" checked> Prepare for presentation </label>
-                                        </div>
-                                        <i class="remove mdi mdi-close-box"></i>
-                                    </li>
-                                    <li>
-                                        <div class="form-check form-check-primary">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox"> Plan weekend outing </label>
-                                        </div>
-                                        <i class="remove mdi mdi-close-box"></i>
-                                    </li>
-                                    <li>
-                                        <div class="form-check form-check-primary">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox"> Pick up kids from school </label>
-                                        </div>
-                                        <i class="remove mdi mdi-close-box"></i>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
         <!-- partial:partials/_footer.html -->
@@ -299,12 +250,26 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Approve selected rows
-        document.querySelector('.btn-approve-all').addEventListener('click', function() {
-            document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
+        function handleAction(button, urlSuffix, successClass, removeClasses) {
+            console.log("Button clicked:", button);
+            // Get all checked checkboxes
+            const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            console.log(checkedCheckboxes);
+
+            // If no checkboxes are checked, exit the function early
+            if (checkedCheckboxes.length === 0) {
+                console.log("hey")
+                return;
+            }
+
+            // Disable the button while requests are being sent
+            button.disabled = true;
+
+            // Process each checked checkbox
+            checkedCheckboxes.forEach(function(checkbox) {
                 let row = checkbox.closest('tr');
                 let orderId = row.getAttribute('data-id');
-                fetch(`/showorder/approve/${orderId}`, {
+                fetch(`/showorder/${urlSuffix}/${orderId}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -312,48 +277,42 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        let badgeContainer = row.querySelector('.badge'); // Select the outer badge container
+                        let badgeContainer = row.querySelector('.badge');
                         if (badgeContainer) {
-                            let badge = badgeContainer.querySelector('.badge'); // Select the inner badge div
-                            console.log(badge);
+                            let badge = badgeContainer.querySelector('.badge');
                             if (badge) {
-                                badge.textContent = 'Approved'; // Update the text content
-                                badge.classList.remove('badge-outline-danger', 'badge-outline-warning');
-                                badge.classList.add('badge-outline-success');
+                                console.log(urlSuffix.charAt(0))
+                                badge.textContent = urlSuffix.charAt(0).toUpperCase() + urlSuffix.slice(1) + "d";
+
+                                badge.classList.remove(...removeClasses);
+                                badge.classList.add(successClass);
                             }
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
                     });
             });
+
+            // Re-enable the button after all requests complete
+            Promise.all(checkedCheckboxes).finally(() => {
+                button.disabled = false;
+            });
+        }
+
+        // Approve selected rows
+        document.querySelector('.btn-approve-all').addEventListener('click', function() {
+            handleAction(this, 'approve', 'badge-outline-success', ['badge-outline-danger', 'badge-outline-warning']);
         });
 
         // Disapprove selected rows
         document.querySelector('.btn-disapprove-all').addEventListener('click', function() {
-            document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
-                let row = checkbox.closest('tr');
-                let orderId = row.getAttribute('data-id');
-                fetch(`/showorder/disapprove/${orderId}`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        let badgeContainer = row.querySelector('.badge'); // Select the outer badge container
-                        if (badgeContainer) {
-                            let badge = badgeContainer.querySelector('.badge'); // Select the inner badge div
-                            console.log(badge);
-                            if (badge) {
-                                badge.textContent = 'Disapproved';
-                                badge.classList.remove('badge-outline-success', 'badge-outline-warning');
-                                badge.classList.add('badge-outline-danger');
-                            }
-                        }
-                    });
-            });
+            handleAction(this, 'disapprove', 'badge-outline-danger', ['badge-outline-success', 'badge-outline-warning']);
         });
+    });
 
-        // Delete selected rows
+
+    // Delete selected rows
         document.querySelector('.btn-delete-all').addEventListener('click', function() {
             document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
                 let row = checkbox.closest('tr');
@@ -371,7 +330,6 @@
                         }
                     });
             });
-        });
     });
 
 

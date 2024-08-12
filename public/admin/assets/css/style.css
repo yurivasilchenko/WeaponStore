@@ -20965,5 +20965,15 @@ div.tagsinput {
     padding: 6px 12px; /* Increases padding for larger buttons */
     font-size: 16px; /* Increases the font size */
 }
+/*buttons css*/
+
+.table td{
+    padding:10px!important;
+}
+.badge{
+    width:100px!important;
+    height:auto!important;
+
+}
 
 
