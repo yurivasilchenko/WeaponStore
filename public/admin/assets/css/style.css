@@ -20928,9 +20928,10 @@ div.tagsinput {
 }
 
 .custom-img{
-    width :100px!important;
-    height :100px!important;
     border-radius: 0!important;
+    width: 150px!important;
+    height: auto!important;
+    display: block!important;
 }
 .custom-card{
     background-color:#027148;
@@ -20950,4 +20951,19 @@ div.tagsinput {
 }
 
 /*description cells*/
+
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    gap: 10px; /* Adjust the distance between the buttons */
+    padding-top:30px; /* Adds padding to the top and bottom */
+    padding-bottom: 20px;
+}
+
+.action-buttons .btn {
+    align-self: center; /* Vertically centers the buttons */
+    padding: 6px 12px; /* Increases padding for larger buttons */
+    font-size: 16px; /* Increases the font size */
+}
+
 

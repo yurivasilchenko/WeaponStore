@@ -113,23 +113,6 @@
            });
        }
 
-      /* function loadProducts(filter) {
-           $.ajax({
-               url: '/filter-products',
-               type: 'GET',
-               data: { type: filter },
-               success: function (response) {
-                   $('.filtered-products-container').html(response);
-                   disableAddToCartButtons(); // Re-run the disable check for add to cart buttons
-
-                   console.log('I am here');
-                   addToCartButtonFunction();
-               },
-               error: function (xhr) {
-                   console.log(xhr.responseText);
-               }
-           });
-       }*/
        function loadProducts(filter) {
            $.ajax({
                url: '/filter-products',

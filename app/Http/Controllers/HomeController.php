@@ -210,6 +210,8 @@ class HomeController extends Controller
             $order->phone = $phone;
             $order->address = $address;
 
+            $order->status = 'Pending';
+
             $order->save();
 
 

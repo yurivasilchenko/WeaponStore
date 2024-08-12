@@ -60,55 +60,69 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @foreach($order as $orders)
-                                    <tr>
-                                        <td>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-
-                                            <span class="ps-2">{{$orders->name}}</span>
-                                        </td>
-                                        <td> {{$orders->email}} </td>
-                                        <td> {{$orders->phone}} </td>
-                                        <td> {{$orders->address}} </td>
-                                        <td> {{$orders->product_name}} </td>
-                                        <td> {{$orders->type}} </td>
-                                        <td> {{$orders->quantity}} </td>
-                                        <td> {{$orders->price}} </td>
-                                        <td>
-                                           {{-- <img  class="custom-img"  src="/productimages/{{$firstImage}}">--}}
-                                            @if(!empty($orders->image))
-                                                @php
-                                                    $images = json_decode($orders->image);
-                                                    $firstImage = isset($images[0]) ? $images[0] : null;
-                                                @endphp
-
-                                                @if(!empty($firstImage))
-                                                    <img class="custom-img" src="/productimages/{{$firstImage}}">
+                                        <tr data-id="{{ $orders->id }}">
+                                            <td>
+                                                <div class="form-check form-check-muted m-0">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox"  class="form-check-input">
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td><span class="ps-2">{{$orders->name}}</span></td>
+                                            <td>{{$orders->email}}</td>
+                                            <td>{{$orders->phone}}</td>
+                                            <td>{{$orders->address}}</td>
+                                            <td>{{$orders->product_name}}</td>
+                                            <td>{{$orders->type}}</td>
+                                            <td>{{$orders->quantity}}</td>
+                                            <td>{{$orders->price}}</td>
+                                            <td>
+                                                @if(!empty($orders->image))
+                                                    @php
+                                                        $images = json_decode($orders->image);
+                                                        $firstImage = isset($images[0]) ? $images[0] : null;
+                                                    @endphp
+                                                    @if(!empty($firstImage))
+                                                        <img class="custom-img" src="/productimages/{{$firstImage}}">
+                                                    @endif
                                                 @endif
-                                            @endif
-
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-outline-success">Approved</div>
-                                        </td>
-                                    </tr>
-
+                                            </td>
+                                            <td>
+                                                <div class="badge">
+                                                    @if($orders->status == 'Approved')
+                                                        <div class="badge badge-outline-success">{{$orders->status}}</div>
+                                                    @elseif($orders->status == 'Disapproved')
+                                                        <div class="badge badge-outline-danger">{{$orders->status}}</div>
+                                                    @elseif($orders->status == 'Pending')
+                                                        <div class="badge badge-outline-warning">{{$orders->status}}</div>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
+
 
                                     </tbody>
                                 </table>
+                                <!-- Action buttons outside of the table -->
+                                <div class="action-buttons">
+                                    <button class="btn btn-success btn-approve-all">Approve Selected</button>
+                                    <button class="btn btn-warning btn-disapprove-all">Disapprove Selected</button>
+                                    <button class="btn btn-danger btn-delete-all">Delete Selected</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
+
+            <!-- 3 blocks, hidden -->
             <div class="row">
                 <div class="col-md-6 col-xl-4 grid-margin stretch-card">
                     <div class="card">
@@ -280,4 +294,85 @@
         <!-- partial -->
     </div>
     <!-- main-panel ends -->
+  </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Approve selected rows
+        document.querySelector('.btn-approve-all').addEventListener('click', function() {
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
+                let row = checkbox.closest('tr');
+                let orderId = row.getAttribute('data-id');
+                fetch(`/showorder/approve/${orderId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        let badgeContainer = row.querySelector('.badge'); // Select the outer badge container
+                        if (badgeContainer) {
+                            let badge = badgeContainer.querySelector('.badge'); // Select the inner badge div
+                            console.log(badge);
+                            if (badge) {
+                                badge.textContent = 'Approved'; // Update the text content
+                                badge.classList.remove('badge-outline-danger', 'badge-outline-warning');
+                                badge.classList.add('badge-outline-success');
+                            }
+                        }
+                    });
+            });
+        });
+
+        // Disapprove selected rows
+        document.querySelector('.btn-disapprove-all').addEventListener('click', function() {
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
+                let row = checkbox.closest('tr');
+                let orderId = row.getAttribute('data-id');
+                fetch(`/showorder/disapprove/${orderId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        let badgeContainer = row.querySelector('.badge'); // Select the outer badge container
+                        if (badgeContainer) {
+                            let badge = badgeContainer.querySelector('.badge'); // Select the inner badge div
+                            console.log(badge);
+                            if (badge) {
+                                badge.textContent = 'Disapproved';
+                                badge.classList.remove('badge-outline-success', 'badge-outline-warning');
+                                badge.classList.add('badge-outline-danger');
+                            }
+                        }
+                    });
+            });
+        });
+
+        // Delete selected rows
+        document.querySelector('.btn-delete-all').addEventListener('click', function() {
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
+                let row = checkbox.closest('tr');
+                let orderId = row.getAttribute('data-id');
+                fetch(`/showorder/delete/${orderId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            row.remove();
+                        }
+                    });
+            });
+        });
+    });
+
+
+</script>

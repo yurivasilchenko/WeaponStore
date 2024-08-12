@@ -133,6 +133,33 @@ class AdminController extends Controller
         return view('admin.showproducts', compact("products"));
     }
 
+    public function approve($id)
+    {
+        $order = Order::find($id);
+        $order->status = 'Approved';
+        $order->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function disapprove($id)
+    {
+        $order = Order::find($id);
+        $order->status = 'Disapproved';
+        $order->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function delete($id)
+    {
+        $order = Order::find($id);
+        $order->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+
 
 
 
