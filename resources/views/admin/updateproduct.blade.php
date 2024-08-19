@@ -60,10 +60,33 @@
                         <label for="desc">Description</label>
                         <textarea type="text" class="form-control" id="desc" name="desc" rows="4" required>{{$data->description}}</textarea>
                     </div>
+
                     <div class="form-group col-md-4">
                         <label for="specs">Specifications</label>
-                        <textarea type="text" class="form-control" id="specs" name="specs" rows="4" required>{{$data->specs}}</textarea>
+                        <div id="specs-container">
+                            @php
+                                // Decode the JSON specifications from the database
+                                $specsArray = json_decode($data->specs, true);
+                            @endphp
+                            @foreach($specsArray as $key => $value)
+                                <div class="specs-row mb-2 row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control mb-1" placeholder="Key" name="specs[{{ $key }}][key]" value="{{ $key }}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Value" name="specs[{{ $key }}][value]" value="{{ $value }}" required>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary" id="add-specs-btn">+ Add Specifications</button>
+                            <button type="button" class="btn btn-danger" id="remove-specs-btn">- Remove Specifications</button>
+                        </div>
                     </div>
+
+
+
 
                     <div class="form-group col-md-4">
                         <label>Old Image</label>
@@ -83,7 +106,7 @@
                         <label for="files">Choose Files</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="files" name="files[]" multiple>
-                            <label class="custom-file-label" for="files">Choose files</label>
+                            <label class="custom-file-label" for="files"></label>
                         </div>
                     </div>
 

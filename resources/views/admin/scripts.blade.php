@@ -19,5 +19,6 @@
 <!-- Custom js for this page -->
 <script src="admin/assets/js/dashboard.js"></script>
 <script src="admin/assets/js/notification.js"></script>
+<script src="admin/assets/js/specs.js"></script>
 
 <!-- End custom js for this page -->

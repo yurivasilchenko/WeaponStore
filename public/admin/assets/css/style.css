@@ -20976,4 +20976,29 @@ div.tagsinput {
 
 }
 
+/*form admin*/
+.custom-form input{
+    color:black;
+}
+input.form-control:focus {
+    background-color: white;
+    box-shadow: none; /* Optional: Removes the blue shadow on focus */
+}
+select.form-control:focus{
+    background-color: white;
+    box-shadow: none; /* Optional: Removes the blue shadow on focus */
+}
+select.form-control{
+    background-color: white;
+    box-shadow: none; /* Optional: Removes the blue shadow on focus */
+}
+.custom-file-input{
+    color:white!important;
+}
+
+.btn-success-custom button{
+    color:white;
+    background-color: transparent!important;
+}
+
 

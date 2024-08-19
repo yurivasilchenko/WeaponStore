@@ -23,7 +23,7 @@
         <div class="container">
 
 
-            <form action="{{url('uploadproduct')}}" method="post" id="product-form" enctype="multipart/form-data">
+            <form action="{{url('uploadproduct')}}" method="post" id="product-form" class="custom-form" enctype="multipart/form-data">
                 <div id="notification" class="notification"></div>
 
                 @csrf
@@ -64,10 +64,29 @@
                         <label for="desc">Description</label>
                         <textarea type="text" class="form-control" id="desc" name="desc" rows="4" placeholder="Enter a detailed product description" required></textarea>
                     </div>
-                    <div class="form-group col-md-4">
+                   {{-- <div class="form-group col-md-4">
                         <label for="specs">Specifications</label>
                         <textarea type="text" class="form-control" id="specs" name="specs" rows="4" placeholder="Enter product specifications in JSON format"></textarea>
-                    </div>
+                    </div>--}}
+                  <div class="form-group col-md-4">
+                      <label for="specs">Specifications</label>
+                      <div id="specs-container">
+                          <div class="specs-row mb-2 row">
+                              <div class="col-md-6">
+                                  <input type="text" class="form-control mb-1" placeholder="Key" name="specs[0][key]" >
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="text" class="form-control" placeholder="Value" name="specs[0][value]" >
+                              </div>
+                          </div>
+                      </div>
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-secondary" id="add-specs-btn">+ Add Specifications</button>
+                          <button type="button" class="btn btn-danger" id="remove-specs-btn">- Remove Specifications</button>
+                      </div>
+
+                  </div>
+
 
 
 
@@ -75,7 +94,7 @@
                         <label for="files">Choose Files</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="files" name="files[]" multiple>
-                            <label class="custom-file-label" for="files">Choose files</label>
+                            <label class="custom-file-label" for="files"></label>
                         </div>
                     </div>
 
@@ -93,5 +112,8 @@
     <!-- container-scroller -->
 <!-- plugins:js -->
 @include('admin.scripts')
+
+</div>
 </body>
+
 </html>

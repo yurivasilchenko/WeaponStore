@@ -8,6 +8,11 @@ class HelperController extends Controller
 {
     public static function parseTree($obj, $specs = []) {
 
+        // Check if $obj is an array, return $specs if it's not
+        if (!is_array($obj)) {
+            return $specs;
+        }
+
         $keys = array_keys($obj);
         foreach ($keys as $key) {
             if (gettype($obj[$key]) === 'string') {

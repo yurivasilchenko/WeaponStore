@@ -43,7 +43,12 @@ class AdminController extends Controller
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
-        $data->specs = $request->input('specs'); //this one
+       /* $data->specs = $request->input('specs'); //this one*/
+
+        $specsArray = $request->input('specs');
+        $specsJson = json_encode(array_column($specsArray, 'value', 'key'));
+
+        $data->specs = $specsJson;
 
 
 
@@ -78,13 +83,15 @@ class AdminController extends Controller
     public function updatedproduct(Request $request,$id){
         $data = Product::find($id);
 
-        $images = [];
+        // Handle single or multiple image uploads
+        $images = json_decode($data->image, true); // Get existing images
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $imageName = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('productimages'), $imageName);
-                $images[] = $imageName;
+                $images[] = $imageName; // Add new image to the list
             }
+            $data->image = json_encode($images); // Update the image field
         }
 
 
@@ -96,7 +103,13 @@ class AdminController extends Controller
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
-        $data->specs = json_encode($request->input('specs')); //this one
+      /*  $data->specs = json_encode($request->input('specs')); //this one*/
+
+
+        $specsArray = $request->input('specs');
+        $specsJson = json_encode(array_column($specsArray, 'value', 'key'));
+
+        $data->specs = $specsJson;
 
 
         $data->save();
