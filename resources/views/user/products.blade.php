@@ -118,12 +118,11 @@
                url: '/filter-products',
                type: 'GET',
                data: { type: filter },
+               headers: { 'Cache-Control': 'no-cache' }, // Ensure no cache
                success: function (response) {
-                   // Ensure the response contains only the inner content
+
                    $('.filtered-products-container').html('<div class="row">' + response + '</div>');
                    disableAddToCartButtons(); // Re-run the disable check for add to cart buttons
-
-                   console.log('I am here');
                    addToCartButtonFunction();
                },
                error: function (xhr) {
@@ -131,6 +130,7 @@
                }
            });
        }
+
 
 
 

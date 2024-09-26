@@ -60,4 +60,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    // In User.php
+    public function isAdmin()
+    {
+        return $this->usertype === 'admin'; // Assuming you have a 'role' column in your users table
+    }
+
 }

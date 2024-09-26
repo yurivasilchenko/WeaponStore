@@ -25,6 +25,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/updateproduct/{id}', [AdminController::class, 'updateproduct'])->name('updateproduct');
     Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])->name('updatedproduct');
     Route::get('/showorder',[AdminController::class,'showorder'])->name('showorder');
+    Route::get('/adminchat',[AdminController::class,'adminchat'])->name('adminchat');
 });
 
 
@@ -44,6 +45,9 @@ Route::post('/showorder/disapprove/{id}', [AdminController::class, 'disapprove']
 Route::delete('/showorder/delete/{id}', [AdminController::class, 'delete'])->name('order.delete');
 
 
+Route::get('/chat', 'App\Http\Controllers\PusherController@index');
+Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
+Route::post('/receive', 'App\Http\Controllers\PusherController@receive');
 
 
 

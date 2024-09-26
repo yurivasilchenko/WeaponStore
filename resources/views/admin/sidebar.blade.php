@@ -34,5 +34,13 @@
                 <span class="menu-title">All Products</span>
             </a>
         </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{url('adminchat')}}">
+              <span class="menu-icon">
+                <i class="mdi mdi-file-document-box"></i>
+              </span>
+                <span class="menu-title">Chat</span>
+            </a>
+        </li>
     </ul>
 </nav>

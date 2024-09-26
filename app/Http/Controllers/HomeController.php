@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Log;
 
 
 class HomeController extends Controller
@@ -92,12 +93,11 @@ class HomeController extends Controller
     {
         $type = $request->input('type');
 
-        if($type == 'All'){
+        if ($type == 'All') {
             $filteredProducts = Product::paginate(10);
-        } else{
+        } else {
             $filteredProducts = Product::where('type', $type)->paginate(10);
         }
-
 
         $count = 0; // Default count if user is not authenticated
         if (auth()->check()) {
@@ -106,10 +106,11 @@ class HomeController extends Controller
         }
 
         if ($request->ajax()) {
-            // Return the partial view with the filtered products
-            return response()->view('user.filtered_products_content', ['data' => $filteredProducts, 'count' => $count])->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+            return response()->view('user.filtered_products_content', ['data' => $filteredProducts, 'count' => $count])
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
         } else {
-            // Return the full view with layout
+
             return view('user.home', ['data' => $filteredProducts, 'count' => $count]);
         }
     }

@@ -82,6 +82,8 @@
 
                     // Submit the form
                     form.submit();
+                    // Clear cart items from local storage
+                    localStorage.removeItem('cartItems');
                 });
             });
         }
