@@ -26,6 +26,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/updatedproduct/{id}', [AdminController::class, 'updatedproduct'])->name('updatedproduct');
     Route::get('/showorder',[AdminController::class,'showorder'])->name('showorder');
     Route::get('/adminchat',[AdminController::class,'adminchat'])->name('adminchat');
+    Route::get('/adminchat/{userId?}', [App\Http\Controllers\AdminController::class, 'adminchat'])->name('adminchat');
 });
 
 

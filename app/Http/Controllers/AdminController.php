@@ -174,7 +174,7 @@ class AdminController extends Controller
     }
 
 
-    public function adminchat()
+    /*public function adminchat()
     {
         $userId = Auth::id();
 
@@ -194,5 +194,29 @@ class AdminController extends Controller
         }
 
         return view('admin.chat', ['messages' => $messages, 'users' => $users]);
+    }*/
+    public function adminchat($userId = null)
+    {
+        $adminId = Auth::id();  // Assuming admin is the authenticated user
+        $users = \App\Models\User::where('usertype', 'user')->get();
+
+        if ($userId) {
+            // Fetch only messages between admin and the selected user
+            $messages = Message::where(function ($query) use ($adminId, $userId) {
+                $query->where('sender_id', $adminId)->where('recipient_id', $userId)
+                    ->orWhere('sender_id', $userId)->where('recipient_id', $adminId);
+            })->get();
+        } else {
+            // Show all messages if no user is selected
+            $messages = Message::with(['sender', 'recipient'])->get();
+        }
+
+        if (request()->ajax()) {
+            // If the request is AJAX, return only the messages view
+            return view('components.messages', ['messages' => $messages])->render();
+        }
+
+        return view('admin.chat', ['messages' => $messages, 'users' => $users]);
     }
+
 }

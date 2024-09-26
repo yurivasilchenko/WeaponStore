@@ -17,9 +17,24 @@
     @include('admin.navbar')
 
     <div class="container-scroller">
-
         <div class="chat">
-            <div class="messages">
+
+           {{-- <div class="user-list">
+                <ul>
+                    @foreach($users as $user)
+                        <li data-user-id="{{ $user->id }}" class="user-select">{{ $user->name }}</li>
+                    @endforeach
+                </ul>
+            </div>--}}
+            <div class="user-list">
+                <ul>
+                    @foreach($users as $user)
+                        <li data-user-id="{{ $user->id }}" class="user-select">{{ $user->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="messages" id="chat-messages">
                 @foreach($messages as $message)
                     <div class="message {{ $message->sender_id == Auth::id() ? 'sent' : 'received' }}">
                         <p><strong>{{ $message->sender->name }}:</strong> {{ $message->message }}</p>
@@ -27,24 +42,30 @@
                 @endforeach
             </div>
 
-            <div class="bottom">
+
+            {{--<div class="bottom">
                 <form method="POST" action="/broadcast">
                     @csrf
                     <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
 
-                    <!-- Add a dropdown for selecting recipient -->
-                    <select id="recipient_id" name="recipient_id">
-                        @foreach($users as $user)
-                            @if($user->id != Auth::id()) <!-- Exclude the current user -->
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endif
-                        @endforeach
-                    </select>
+                    <!-- Hidden field to store the recipient ID -->
+                    <input type="hidden" id="recipient_id" name="recipient_id" value="">
 
                     <button type="submit" style="height: 30px;width:30px;"></button>
                 </form>
+            </div>--}}
+            <!-- Message input and submit form -->
+            <div class="bottom">
+                <form method="POST" action="/broadcast">
+                    @csrf
+                    <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
+                    <input type="hidden" id="recipient_id" name="recipient_id">
+                    <button type="submit" style="height: 30px;width:30px;"></button>
+                </form>
             </div>
+
         </div>
+    </div>
 
         <!-- page-body-wrapper ends -->
     </div>
@@ -63,7 +84,59 @@
             cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
             encrypted: true
         });
-        console.log(pusher);
+
+
+        $(document).ready(function() {
+            // Automatically select the first user when the page loads
+            const firstUser = $('.user-select').first();
+            if (firstUser.length > 0) {
+                const firstUserId = firstUser.data('user-id');
+
+                // Set the hidden input's value to the first user's ID
+                $('#recipient_id').val(firstUserId);
+
+                // Simulate a click on the first user to trigger message load
+                firstUser.addClass('active');
+                loadMessagesForUser(firstUserId);
+            }
+
+            // Handle user selection when a user is clicked
+            $('.user-select').click(function() {
+                // Remove active class from all users
+                $('.user-select').removeClass('active');
+
+                // Add active class to the clicked user
+                $(this).addClass('active');
+
+                // Get the selected user's ID from the data attribute
+                const selectedUserId = $(this).data('user-id');
+
+                // Set the hidden input's value to the selected user's ID
+                $('#recipient_id').val(selectedUserId);
+
+                // Load messages for the selected user
+                loadMessagesForUser(selectedUserId);
+            });
+
+            // Function to load messages for the selected user
+            function loadMessagesForUser(userId) {
+                // Example: Make an AJAX call to fetch messages for the selected user
+                $.ajax({
+                    url: '/adminchat/' + userId, // Adjust this URL based on your routes
+                    method: 'GET',
+                    success: function(data) {
+                        // Update the chat message area with the retrieved messages
+                        $('#chat-messages').html(data);
+                    },
+                    error: function(xhr) {
+                        console.log('Error loading messages: ', xhr);
+                    }
+                });
+            }
+        });
+
+
+
 
         // Subscribe to the 'public' channel
         const channel = pusher.subscribe('public');

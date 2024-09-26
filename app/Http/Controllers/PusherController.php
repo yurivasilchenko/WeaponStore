@@ -48,7 +48,7 @@ class PusherController extends Controller
         $adminId = \App\Models\User::where('usertype', 'admin')->value('id');
 
         // Get the recipient_id from the request
-        $recipientId = \App\Models\User::where('usertype', 'user')->first()->id;
+        $recipientId = $request->input('recipient_id');
 
         // If the user is an admin, ensure recipient_id is provided in the request
         if (Auth::user()->isAdmin()) {
