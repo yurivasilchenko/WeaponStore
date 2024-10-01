@@ -34,12 +34,17 @@
                 </ul>
             </div>
 
-            <div class="messages" id="chat-messages">
+            <div class="messages" id="chat-messages" style="display: none;">
                 @foreach($messages as $message)
                     <div class="message {{ $message->sender_id == Auth::id() ? 'sent' : 'received' }}">
                         <p><strong>{{ $message->sender->name }}:</strong> {{ $message->message }}</p>
                     </div>
                 @endforeach
+            </div>
+
+            <!-- Loading indicator -->
+            <div id="loading-indicator" style="display: none;">
+                <p>Loading...</p>
             </div>
 
 
@@ -120,6 +125,10 @@
 
             // Function to load messages for the selected user
             function loadMessagesForUser(userId) {
+                // Show loading indicator and hide messages area
+                $('#loading-indicator').show();
+                $('#chat-messages').hide();
+
                 // Example: Make an AJAX call to fetch messages for the selected user
                 $.ajax({
                     url: '/adminchat/' + userId, // Adjust this URL based on your routes
@@ -127,13 +136,20 @@
                     success: function(data) {
                         // Update the chat message area with the retrieved messages
                         $('#chat-messages').html(data);
+
+                        // Hide the loading indicator and show the messages area
+                        $('#loading-indicator').hide();
+                        $('#chat-messages').show();
                     },
                     error: function(xhr) {
                         console.log('Error loading messages: ', xhr);
+                        $('#loading-indicator').hide();
+                        $('#chat-messages').show(); // Fallback to show messages area even if there's an error
                     }
                 });
             }
         });
+
 
 
 
