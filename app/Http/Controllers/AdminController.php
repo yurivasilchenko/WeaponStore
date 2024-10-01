@@ -207,8 +207,8 @@ class AdminController extends Controller
                     ->orWhere('sender_id', $userId)->where('recipient_id', $adminId);
             })->get();
         } else {
-            // Show all messages if no user is selected
-            $messages = Message::with(['sender', 'recipient'])->get();
+            // No messages will be shown initially before a user is selected
+            $messages = collect();  // Empty collection
         }
 
         if (request()->ajax()) {
