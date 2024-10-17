@@ -16,6 +16,9 @@ return [
     */
 
     'default' => env('BROADCAST_DRIVER', 'pusher'),
+    'auth' => [
+        'guards' => ['web'],  // Set 'web' guard explicitly if using session-based authentication
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,6 +42,9 @@ return [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => true,
             ],
+            'auth' => [
+                'endpoint' => '/broadcasting/auth',  // Confirm this endpoint is set
+            ]
         ],
     ],
 ];

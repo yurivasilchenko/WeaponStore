@@ -1804,3 +1804,36 @@ text-align: center; /* Center content horizontally */
 }
 
 
+/*
+user chat css*/
+/* Sent messages (from the user) */
+.chat{
+    width:20%;
+}
+.messages {
+    display: flex;
+    flex-direction: column; /* Stack messages in a column */
+    padding: 10px;
+    height: 400px; /* Set a fixed height for the chat area */
+    overflow-y: auto; /* Enable scrolling if messages exceed the height */
+}
+
+.message {
+    max-width: 70%; /* Limit the maximum width of messages */
+    border-radius: 15px; /* Rounded corners */
+    margin: 5px 0; /* Space between messages */
+    padding: 10px 15px; /* Padding inside messages */
+    word-wrap: break-word; /* Allow word wrapping */
+}
+
+/* Sent messages (from the user) */
+.message.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end; /* Align sent messages to the right */
+}
+
+/* Received messages (from the admin) */
+.message.received {
+    background-color: #f1f0f0;
+    align-self: flex-start; /* Align received messages to the left */
+}
