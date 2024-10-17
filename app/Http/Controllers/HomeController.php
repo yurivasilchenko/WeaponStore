@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Message;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -221,5 +222,35 @@ class HomeController extends Controller
         DB::table('carts')->where('email',$email)->delete();
         return redirect()->back();
     }
+
+    public function chat($userId = null)
+    {
+        Log::info('Chat method called'); // Check if this log is written
+
+        $adminId = \App\Models\User::where('usertype', 'admin')->value('id');
+        $userId = Auth::id(); // Get the authenticated user's ID
+
+        Log::info('Admin ID: ' . $adminId); // Log the admin ID
+        Log::info('User ID: ' . $userId); // Log the user ID
+
+        // Fetch messages between the authenticated user and admin
+        $messages = Message::where(function ($query) use ($userId, $adminId) {
+            $query->where('sender_id', $userId)->where('recipient_id', $adminId)
+                ->orWhere('sender_id', $adminId)->where('recipient_id', $userId);
+        })->get();
+
+        Log::info('Fetched Messages:', $messages->toArray());  // Log the fetched messages
+
+        if (request()->ajax()) {
+            Log::info('AJAX request for messages:', $messages->toArray());
+            return view('components.messages', compact('messages'))->render();  // This should return only the messages part
+        }
+
+        // You should not return the entire chat view from here unless you are directly accessing the chat route
+        return abort(404);  // In case it's accessed without AJAX
+    }
+
+
+
 
 }

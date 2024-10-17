@@ -174,27 +174,7 @@ class AdminController extends Controller
     }
 
 
-    /*public function adminchat()
-    {
-        $userId = Auth::id();
 
-        // Fetch users with 'user' type for recipient selection
-        $users = \App\Models\User::where('usertype', 'user')->get();
-
-        if (Auth::user()->isAdmin()) {
-            $messages = Message::with(['sender', 'recipient'])->get();
-        } else {
-            $messages = Message::where(function($query) use ($userId) {
-                $query->where('sender_id', $userId)
-                    ->orWhere('recipient_id', $userId);
-            })->where(function($query) {
-                $query->where('sender_id', 1)
-                    ->orWhere('recipient_id', 1);
-            })->get();
-        }
-
-        return view('admin.chat', ['messages' => $messages, 'users' => $users]);
-    }*/
     public function adminchat($userId = null)
     {
         $adminId = Auth::id();  // Assuming admin is the authenticated user

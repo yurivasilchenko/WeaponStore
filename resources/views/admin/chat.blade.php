@@ -18,14 +18,6 @@
 
     <div class="container-scroller">
         <div class="chat">
-
-           {{-- <div class="user-list">
-                <ul>
-                    @foreach($users as $user)
-                        <li data-user-id="{{ $user->id }}" class="user-select">{{ $user->name }}</li>
-                    @endforeach
-                </ul>
-            </div>--}}
             <div class="user-list">
                 <ul>
                     @foreach($users as $user)
@@ -47,18 +39,6 @@
                 <p>Loading...</p>
             </div>
 
-
-            {{--<div class="bottom">
-                <form method="POST" action="/broadcast">
-                    @csrf
-                    <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-
-                    <!-- Hidden field to store the recipient ID -->
-                    <input type="hidden" id="recipient_id" name="recipient_id" value="">
-
-                    <button type="submit" style="height: 30px;width:30px;"></button>
-                </form>
-            </div>--}}
             <!-- Message input and submit form -->
             <div class="bottom">
                 <form method="POST" action="/broadcast">
@@ -82,95 +62,105 @@
 
 
 <script>
-    // Check if 'pusher' is already defined to prevent redeclaration
-    if (typeof pusher === 'undefined') {
-        // Initialize Pusher
-        const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
+    $(document).ready(function() {
+
+        let pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
             cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
-            encrypted: true
+            encrypted: true,
+            authEndpoint: '/broadcasting/auth',  // This handles private channel authentication
+            auth: {
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}'  // Include CSRF token
+                }
+            }
         });
 
 
-        $(document).ready(function() {
-            // Automatically select the first user when the page loads
-            const firstUser = $('.user-select').first();
-            if (firstUser.length > 0) {
-                const firstUserId = firstUser.data('user-id');
+        let channel = null; // Define the channel globally so it can be reused
 
-                // Set the hidden input's value to the first user's ID
-                $('#recipient_id').val(firstUserId);
+        // Automatically select the first user when the page loads
+        const firstUser = $('.user-select').first();
+        if (firstUser.length > 0) {
+            const firstUserId = firstUser.data('user-id');
+            $('#recipient_id').val(firstUserId);
+            firstUser.addClass('active');
+            loadMessagesForUser(firstUserId);
 
-                // Simulate a click on the first user to trigger message load
-                firstUser.addClass('active');
-                loadMessagesForUser(firstUserId);
+            // Subscribe to the Pusher private channel for the first user
+            subscribeToPrivateChannel(firstUserId);
+        }
+
+        // Handle user selection when a user is clicked
+        $('.user-select').click(function() {
+            $('.user-select').removeClass('active');
+            $(this).addClass('active');
+
+            const selectedUserId = $(this).data('user-id');
+            $('#recipient_id').val(selectedUserId);
+            loadMessagesForUser(selectedUserId);
+
+            // Subscribe to the Pusher private channel for the selected user
+            subscribeToPrivateChannel(selectedUserId);
+        });
+
+        // Function to subscribe to private Pusher channel
+        function subscribeToPrivateChannel(recipientId) {
+            if (channel) {
+                // Unbind and unsubscribe the previous channel before subscribing to a new one
+                channel.unbind();
+                pusher.unsubscribe('private-chat.' + recipientId);
             }
 
-            // Handle user selection when a user is clicked
-            $('.user-select').click(function() {
-                // Remove active class from all users
-                $('.user-select').removeClass('active');
 
-                // Add active class to the clicked user
-                $(this).addClass('active');
+            // Subscribe to a new private channel
 
-                // Get the selected user's ID from the data attribute
-                const selectedUserId = $(this).data('user-id');
+            channel = pusher.subscribe('private-chat.' + recipientId);
+            console.log(recipientId)
+            Pusher.logToConsole = true;
 
-                // Set the hidden input's value to the selected user's ID
-                $('#recipient_id').val(selectedUserId);
-
-                // Load messages for the selected user
-                loadMessagesForUser(selectedUserId);
+            pusher.connection.bind('connected', function() {
+                console.log("Pusher connected successfully");
             });
 
-            // Function to load messages for the selected user
-            function loadMessagesForUser(userId) {
-                // Show loading indicator and hide messages area
-                $('#loading-indicator').show();
-                $('#chat-messages').hide();
-
-                // Example: Make an AJAX call to fetch messages for the selected user
-                $.ajax({
-                    url: '/adminchat/' + userId, // Adjust this URL based on your routes
-                    method: 'GET',
-                    success: function(data) {
-                        // Update the chat message area with the retrieved messages
-                        $('#chat-messages').html(data);
-
-                        // Hide the loading indicator and show the messages area
-                        $('#loading-indicator').hide();
-                        $('#chat-messages').show();
-                    },
-                    error: function(xhr) {
-                        console.log('Error loading messages: ', xhr);
-                        $('#loading-indicator').hide();
-                        $('#chat-messages').show(); // Fallback to show messages area even if there's an error
-                    }
-                });
-            }
-        });
+            pusher.connection.bind('error', function(err) {
+                console.error("Pusher connection error: ", err);
+            });
 
 
+            // Bind the chat event to receive messages for this channel
+            channel.bind('chat', function(data) {
+                // Append the received message to the chat window
+                const newMessage = `<div class="left message"><p>${data.message}</p></div>`;
+                $(".messages").append(newMessage);
+                console.log("binded");
 
+                // Scroll to the bottom of the chat
+                $(document).scrollTop($(document).height());
+            });
+        }
 
+        // Function to load messages for the selected user
+        function loadMessagesForUser(userId) {
+            $('#loading-indicator').show();
+            $('#chat-messages').hide();
 
-        // Subscribe to the 'public' channel
-        const channel = pusher.subscribe('public');
-        channel.bind('chat', function(data) {
-            console.log('Received message:', data);
-        });
+            $.ajax({
+                url: '/adminchat/' + userId,
+                method: 'GET',
+                success: function(data) {
+                    console.log('Succes: ');
+                    $('#chat-messages').html(data);
+                    $('#loading-indicator').hide();
+                    $('#chat-messages').show();
+                },
+                error: function(xhr) {
+                    console.log('Error loading messages: ', xhr);
+                    $('#loading-indicator').hide();
+                    $('#chat-messages').show();
+                }
+            });
+        }
 
-        // Listen for the 'chat' event
-        channel.bind('chat', function(data) {
-            // Append the received message to the chat window
-            const newMessage = `<div class="left message"><p>${data.message}</p></div>`;
-            $(".messages").append(newMessage);
-
-            // Scroll to the bottom of the chat
-            $(document).scrollTop($(document).height());
-        });
-
-        // Broadcast messages
         // Broadcast messages
         $("form").submit(function(event) {
             event.preventDefault();
@@ -187,16 +177,15 @@
                     recipient_id: $("#recipient_id").val()  // Include recipient_id here
                 }
             }).done(function(res) {
-                // Display your own message
-                $(".messages").append(`<div class="right message"><p>${$("#message").val()}</p></div>`);
-                $("#message").val('');
-                $(document).scrollTop($(document).height());
+                // Append the message to the chat, with appropriate alignment
+                $(".messages").append(`<div class="message sent"><p><strong>You:</strong> ${messageContent}</p></div>`);
+                $("#message").val('');  // Clear the input
+                $(document).scrollTop($(document).height());  // Scroll to the bottom
                 console.log('Message sent');
             });
         });
-    } else {
-        console.log("Pusher already initialized.");
-    }
+    });
+
 </script>
 
 

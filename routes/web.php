@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,10 +49,30 @@ Route::post('/showorder/disapprove/{id}', [AdminController::class, 'disapprove']
 Route::delete('/showorder/delete/{id}', [AdminController::class, 'delete'])->name('order.delete');
 
 
-Route::get('/chat', 'App\Http\Controllers\PusherController@index');
+Route::get('/chat/{userId}', [HomeController::class, 'chat'])->name('chat');
 Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
 Route::post('/receive', 'App\Http\Controllers\PusherController@receive');
 
+Broadcast::routes(['middleware' => ['auth']]);
+
+
+Route::post('/broadcasting/auth', function (Request $request) {
+    $user = Auth::user(); // Get the authenticated user
+
+    // Log the authenticated user
+    logger('Authenticated user: ', ['user' => $user]);
+
+    // If user is not authenticated, return a 403 Forbidden response
+    if (!$user) {
+        return response()->json(['message' => 'Unauthorized'], 403);
+    }
+
+    // Log the incoming request for debugging
+    logger('Incoming request: ', ['request' => $request->all()]);
+
+    // Authorize the channel
+    return Broadcast::auth($request);
+});
 
 
 Route::middleware([
@@ -61,3 +84,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
