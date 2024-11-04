@@ -1,48 +1,66 @@
-<div class="chat">
-    <div class="top">
+<div class="chat-container">
+    <!-- Chat Icon -->
+    <div class="chat-icon" id="chatIcon">
+        <i class="fas fa-comments"></i> <!-- Chat icon -->
+    </div>
+
+    <div class="chat" id="chat" style="display: none;"> <!-- Initially hidden -->
         @auth
+            <div class="user-chat">
+                <div class="messages" id="chat-messages">
+                    <!-- Messages will be injected here via AJAX -->
+                </div>
+            </div>
+            <!-- Loading indicator -->
+            <div id="loading-indicator" style="display: none;">
+                <p>Loading...</p>
+            </div>
 
-        <img
-            src="https://media.npr.org/assets/img/2024/04/29/spongebobsquarepants_key_art_custom-3ce5c431ab9bbe048686fd56a6e535dbf7b41cf5.jpg"
-            alt="Avatar" style="width:50px;height:50px;">
-        <div>
-            <p>Spongi Bobi</p>
-            <small>Online</small>
-        </div>
+            <div class="bottom">
+                <form method="POST" action="/broadcast" class="chat-form">
+                    @csrf
+                    <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
+                    <input type="hidden" id="recipient_id" name="recipient_id">
+                    <button type="submit" class="chat-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        @else
+            <div class="auth-required">
+                <h4 class="auth-message">You need to log in or register to use the chat feature.</h4>
+                <div class="auth-buttons">
+                    <a href="{{ route('login') }}" class="btn auth-btn login-btn">Login</a>
+                    <a href="{{ route('register') }}" class="btn auth-btn register-btn">Register</a>
+                </div>
+            </div>
+        @endauth
     </div>
-
-
-    <div class="user-chat">
-        <div class="messages" id="chat-messages">
-            <!-- Messages will be injected here via AJAX -->
-        </div>
-    </div>
-    <!-- Loading indicator -->
-    <div id="loading-indicator" style="display: none;">
-        <p>Loading...</p>
-    </div>
-
-
-    <div class="bottom">
-        <form method="POST" action="/broadcast">
-            @csrf
-            <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-            <input type="hidden" id="recipient_id" name="recipient_id">
-            <button type="submit" style="height: 30px;width:30px;"></button>
-        </form>
-    </div>
-    @else
-        <div class="messages">
-            <h4>You need to register to use the chat feature</h4>
-            <a href="{{ route('register') }}" class="btn btn-primary mt-3">Register</a>
-        </div>
-    @endauth
 </div>
 
 
 {{--@include('user.pusher')--}}
 
 <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const chatIcon = document.getElementById('chatIcon');
+        const chat = document.getElementById('chat');
+
+        chatIcon.addEventListener('click', function () {
+            if (chat.style.display === 'none' || chat.style.display === '') {
+                chat.style.display = 'block'; // Show chat
+
+                // Scroll to the bottom of the chat messages when the chat is opened
+                const messagesContainer = document.getElementById('chat-messages');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            } else {
+                chat.style.display = 'none'; // Hide chat
+            }
+        });
+    });
+
     $(document).ready(function() {
         @auth
         // Get the authenticated user's ID
@@ -71,7 +89,10 @@
             console.log("Received message: ", data);
             const newMessage = `<div class="message received"><p><strong>Admin:</strong> ${data.message}</p></div>`;
             $(".messages").append(newMessage);
-            $(document).scrollTop($(document).height());
+
+            // Scroll the chat messages container to the bottom
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         });
 
 
@@ -87,6 +108,10 @@
                     $('#chat-messages').html(data);  // Inject the messages into the chat container
                     $('#loading-indicator').hide();
                     $('#chat-messages').show();
+
+                    // Scroll the chat messages container to the bottom after loading
+                    const messagesContainer = document.getElementById('chat-messages');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 },
                 error: function(xhr) {
                     console.log('Error loading messages: ', xhr);
@@ -96,9 +121,6 @@
             });
         }
 
-
-
-        // Broadcast messages
         // Broadcast messages
         $("form").submit(function(event) {
             event.preventDefault();
@@ -118,7 +140,11 @@
                 // Append the message to the chat, with appropriate alignment
                 $(".messages").append(`<div class="message sent"><p><strong>You:</strong> ${messageContent}</p></div>`);
                 $("#message").val('');  // Clear the input
-                $(document).scrollTop($(document).height());  // Scroll to the bottom
+
+                // Scroll the chat messages container to the bottom
+                const messagesContainer = document.getElementById('chat-messages');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
                 console.log('Message sent');
             });
         });

@@ -40,44 +40,96 @@
 
 <!--Header end -->
 
-<div class="container mt-4">
-    <div class="row">
+
+<div class="container">
+    <div class="row container-row">
         <div class="col-md-8">
             @if(!empty($product->image))
                 @php
                     $images = json_decode($product->image);
                     $firstImage = isset($images[0]) ? $images[0] : null;
                 @endphp
-                @if(!empty($firstImage))
-                    <img class="product-main-img" src="/productimages/{{$firstImage}}">
-                @endif
+                <div class="product-main-img-container">
+                    @if(!empty($firstImage))
+                        <img class="product-main-img" src="/productimages/{{$firstImage}}">
+                    @endif
+                    <!-- Left Arrow -->
+                    <button class="arrow left-arrow" onclick="changeImage(-1)">&#10094;</button>
+                    <!-- Right Arrow -->
+                    <button class="arrow right-arrow" onclick="changeImage(1)">&#10095;</button>
+                </div>
             @endif
+
+                @php
+                    $decodedSpecs = json_decode($product->specs, true);
+                    $specs = \App\Http\Controllers\HelperController::parseTree($decodedSpecs);
+                @endphp
+
+
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="row secondary-images-container">
+                        @if(!empty($images))
+                            @foreach($images as $image)
+                                <div class="col-md-2 ">
+                                    <img class="img-thumbnail product-secondary-img" src="/productimages/{{$image}}" onclick="changeMainImage(this)">
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4 show-product">
             <div class="product-info">
                 <div>
-                    <h1>{{ $product->name }}</h1>
+                    <div class="product-info">
+                        <h1>{{ $product->name }}</h1>
+                        <div class="price">
+                            <p>{{ $product->price }}&#8382;</p>
+                        </div>
+
+                    </div>
+                    <p class="product-description-preview">
+                        {{ Str::limit($product->description, 150) }}
+                        <span class="more-link" onclick="toggleDescription()">...more</span>
+                    </p>
+                    <p class="product-description-full" style="display: none;">
+                        {{ $product->description }}
+                        <span class="less-link" onclick="toggleDescription()">...less</span>
+                    </p>
+
+                    <div class="short-specs">
+                        <h3 class="specs-header">Details: </h3> <!-- Added Details header -->
+                        <ul class="custom-featured-list">
+                            @foreach($specs as $spec)
+                                <li>
+                                    <a>
+                                        <span>{{ key($spec) }}</span>: <span>{{ current($spec) }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-                <div class="price">
-                    <p>{{ $product->price }}&#8382;</p>
-                </div>
+
             </div>
 
-            <div>
+            <div class="stock-info mt-4"> <!-- Added margin-top here -->
                 @if($product->quantity > 0)
-                    <p class="stock-status">In stock</p>
-                    <p class="quantity-left">{{ $product->quantity }} more left!</p>
+                    <p class="stock-status in-stock">In stock</p> <!-- Added 'in-stock' class -->
+                    <p class="quantity-left">Only <span class="quantity">{{ $product->quantity }}</span> left!</p> <!-- Added a span for quantity -->
                 @else
-                    <p class="stock-status">Out of stock</p>
+                    <p class="stock-status out-of-stock">Out of stock</p>
                 @endif
             </div>
 
-            <div>
-                <form id="addToCartForm" action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name,'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
+            <div class="add-to-cart-container">
+                <form id="addToCartForm" action="{{ route('addcart', ['id' => $product->id, 'name' => $product->name, 'type' => $product->type, 'price' => $product->price, 'quantity' => $product->quantity, 'description' => $product->description, 'image' => $product->image]) }}" method="POST">
                     @csrf
                     <div class="d-flex align-items-center">
                         <div>
-                            <input type="hidden" name="productId" value="{{$product->id}}">
+                            <input type="hidden" name="productId" value="{{ $product->id }}">
                             <input class="btn btn-success cartbtn" type="submit" value="Add to Cart">
                         </div>
                         <div class="ml-2">
@@ -92,64 +144,38 @@
                         </div>
                     </div>
                 </form>
-
-
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="row">
-                @if(!empty($images))
-                    @foreach($images as $image)
-                        <div class="col-md-2">
-                            <img class="img-thumbnail product-secondary-img" src="/productimages/{{$image}}" onclick="changeMainImage(this)">
-                        </div>
-                    @endforeach
-                @endif
             </div>
         </div>
     </div>
 
     @php
         $decodedSpecs = json_decode($product->specs, true);
-
-  $specs =  \App\Http\Controllers\HelperController::parseTree($decodedSpecs);
-
+        $specs = \App\Http\Controllers\HelperController::parseTree($decodedSpecs);
     @endphp
 
-    <ul>
-
-    </ul>
-
-</div>
-
-<div class="best-features">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-heading custom-section-heading">
-                    <h2>About {{$product->name}}</h2>
+    <div class="best-features" id="fullDescriptionSection">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading custom-section-heading">
+                        <h2>About {{$product->name}}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="left-content custom-section-heading">
-
-                    <p>{{$product->description}}</p>
-                    <p>Product Specs:</p>
-                    <ul class="custom-featured-list">
-                        @foreach($specs as $spec)
-                            <li><a>{{ key($spec) }}: {{ current($spec) }}</a></li>
-                        @endforeach
-                    </ul>
+                <div class="col-md-6">
+                    <div class="left-content custom-section-heading">
+                        <p>{{$product->description}}</p>
+                        <p>Product Specs:</p>
+                        <ul class="custom-featured-list">
+                            @foreach($specs as $spec)
+                                <li><a>{{ key($spec) }}: {{ current($spec) }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @include('user.footer')
 
 @include('user.scripts')
@@ -157,14 +183,35 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
+
 <script>
 
+    let currentIndex = 0; // Track the current image index
+    const images = @json($images); // Pass the PHP images array to JavaScript
 
     function changeMainImage(element) {
         var mainImage = document.querySelector('.product-main-img');
         mainImage.src = element.src;
+        currentIndex = Array.from(document.querySelectorAll('.product-secondary-img')).indexOf(element);
     }
 
+    function changeImage(direction) {
+        currentIndex += direction; // Move left or right
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1; // Wrap to last image
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0; // Wrap to first image
+        }
+        // Change the main image
+        var mainImage = document.querySelector('.product-main-img');
+        mainImage.src = '/productimages/' + images[currentIndex];
+    }
+
+    function toggleDescription() {
+        document.getElementById('fullDescriptionSection').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
 
 </script>
 

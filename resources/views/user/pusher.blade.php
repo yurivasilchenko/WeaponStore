@@ -1,32 +1,64 @@
 <script>
-    // Check if 'pusher' is already defined to prevent redeclaration
-    if (typeof pusher === 'undefined') {
-        // Initialize Pusher
-        const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
+    $(document).ready(function() {
+        @auth
+        // Get the authenticated user's ID
+        let userId = {{ Auth::check() ? Auth::user()->id : 'null' }};
+
+        if (userId) {
+            loadMessagesForUser(userId);
+        }
+
+        let pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
             cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
-            encrypted: true
+            encrypted: true,
+            authEndpoint: '/broadcasting/auth',
+            auth: {
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}'
+                }
+            }
         });
-        console.log(pusher);
 
-        // Subscribe to the 'public' channel
-        const channel = pusher.subscribe('public');
-        channel.bind('chat', function(data) {
-            console.log('Received message:', data);
-        });
+        // Subscribe to the private channel for the authenticated user
+        const channel = pusher.subscribe('private-chat.' + userId);
 
-        // Listen for the 'chat' event
+        // Bind the chat event to receive messages
         channel.bind('chat', function(data) {
-            // Append the received message to the chat window
-            const newMessage = `<div class="left message"><p>${data.message}</p></div>`;
+            console.log("Received message: ", data);
+            const newMessage = `<div class="message received"><p><strong>Admin:</strong> ${data.message}</p></div>`;
             $(".messages").append(newMessage);
-
-            // Scroll to the bottom of the chat
             $(document).scrollTop($(document).height());
         });
 
+
+        // Load messages for the authenticated user
+        function loadMessagesForUser(userId) {
+            $('#loading-indicator').show();
+            $('#chat-messages').hide();
+
+            $.ajax({
+                url: '/chat/' + userId,
+                method: 'GET',
+                success: function(data) {
+                    $('#chat-messages').html(data);  // Inject the messages into the chat container
+                    $('#loading-indicator').hide();
+                    $('#chat-messages').show();
+                },
+                error: function(xhr) {
+                    console.log('Error loading messages: ', xhr);
+                    $('#loading-indicator').hide();
+                    $('#chat-messages').show();
+                }
+            });
+        }
+
+
+
+        // Broadcast messages
         // Broadcast messages
         $("form").submit(function(event) {
             event.preventDefault();
+            const messageContent = $("#message").val();
 
             $.ajax({
                 url: "/broadcast",
@@ -36,17 +68,17 @@
                 },
                 data: {
                     _token: '{{ csrf_token() }}',
-                    message: $("form #message").val(),
+                    message: messageContent
                 }
             }).done(function(res) {
-                // Display your own message
-                $(".messages").append(`<div class="right message"><p>${$("form #message").val()}</p></div>`);
-                $("form #message").val('');
-                $(document).scrollTop($(document).height());
-                console.log('sent');
+                // Append the message to the chat, with appropriate alignment
+                $(".messages").append(`<div class="message sent"><p><strong>You:</strong> ${messageContent}</p></div>`);
+                $("#message").val('');  // Clear the input
+                $(document).scrollTop($(document).height());  // Scroll to the bottom
+                console.log('Message sent');
             });
         });
-    } else {
-        console.log("Pusher already initialized.");
-    }
+
+        @endauth
+    });
 </script>

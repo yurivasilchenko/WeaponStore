@@ -21001,4 +21001,17 @@ select.form-control{
     background-color: transparent!important;
 }
 
+.description textarea {
+    background-color: white; /* Ensure white background by default */
+    color: black; /* Ensure text color is black */
+}
+
+.description textarea:focus {
+    background-color: white; /* Keep background color white when focused */
+    color: black; /* Keep text color black when focused */
+    border-color: #80bdff; /* Optional: Change border color to indicate focus */
+    outline: none; /* Remove default focus outline if needed */
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Optional: Add a focus shadow */
+}
+
 
