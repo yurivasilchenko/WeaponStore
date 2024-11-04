@@ -10,30 +10,31 @@
     //Add active class to nav-link based on url dynamically
     //Active class can be hard coded directly in html file also as required
 
-    function addActiveClass(element) {
-      if (current === "") {
-        //for root url
-        if (element.attr('href').indexOf("index.html") !== -1) {
-          element.parents('.nav-item').last().addClass('active');
-          if (element.parents('.sub-menu').length) {
-            element.closest('.collapse').addClass('show');
-            element.addClass('active');
+      function addActiveClass(element) {
+          var elementPath = element.attr('href').split("/").slice(-1)[0]; // Get the last part of the URL
+          if (current === "") {
+              // for root URL
+              if (elementPath === "index.html") {
+                  element.parents('.nav-item').last().addClass('active');
+                  if (element.parents('.sub-menu').length) {
+                      element.closest('.collapse').addClass('show');
+                      element.addClass('active');
+                  }
+              }
+          } else {
+              // for other URLs, compare last part of the URL
+              if (elementPath === current) {
+                  element.parents('.nav-item').last().addClass('active');
+                  if (element.parents('.sub-menu').length) {
+                      element.closest('.collapse').addClass('show');
+                      element.addClass('active');
+                  }
+                  if (element.parents('.submenu-item').length) {
+                      element.addClass('active');
+                  }
+              }
           }
-        }
-      } else {
-        //for other url
-        if (element.attr('href').indexOf(current) !== -1) {
-          element.parents('.nav-item').last().addClass('active');
-          if (element.parents('.sub-menu').length) {
-            element.closest('.collapse').addClass('show');
-            element.addClass('active');
-          }
-          if (element.parents('.submenu-item').length) {
-            element.addClass('active');
-          }
-        }
       }
-    }
 
     var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
     $('.nav li a', sidebar).each(function() {
@@ -116,7 +117,7 @@
       document.querySelector('#proBanner').classList.add('d-none');
       document.querySelector('#proBanner').classList.remove('d-flex');
       var date = new Date();
-      date.setTime(date.getTime() + 24 * 60 * 60 * 1000); 
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
       $.cookie('corona-free-banner', "true", { expires: date });
     });
   });

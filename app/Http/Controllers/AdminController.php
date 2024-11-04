@@ -81,45 +81,52 @@ class AdminController extends Controller
 
     }
 
-    public function updatedproduct(Request $request,$id){
+    public function updatedproduct(Request $request, $id)
+    {
         $data = Product::find($id);
 
-        // Handle single or multiple image uploads
-        $images = json_decode($data->image, true); // Get existing images
+        // Handle the image update logic
         if ($request->hasFile('files')) {
+            // Delete old images from the server
+            $oldImages = json_decode($data->image, true);
+            if (!empty($oldImages)) {
+                foreach ($oldImages as $oldImage) {
+                    $oldImagePath = public_path('productimages/' . $oldImage);
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath); // Delete old image file
+                    }
+                }
+            }
+
+            // Process new images
+            $images = [];
             foreach ($request->file('files') as $file) {
                 $imageName = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('productimages'), $imageName);
-                $images[] = $imageName; // Add new image to the list
+                $images[] = $imageName; // Add new image to the array
             }
-            $data->image = json_encode($images); // Update the image field
+            $data->image = json_encode($images); // Update the image field with new images
         }
 
-
-        $data->image = json_encode($images);
-
-
+        // Update other product fields
         $data->name = $request->input('name');
         $data->type = $request->input('type');
         $data->price = $request->input('price');
         $data->quantity = $request->input('quantity');
         $data->description = $request->input('desc');
-      /*  $data->specs = json_encode($request->input('specs')); //this one*/
 
-
+        // Update the specs
         $specsArray = $request->input('specs');
         $specsJson = json_encode(array_column($specsArray, 'value', 'key'));
-
         $data->specs = $specsJson;
 
-
+        // Save the updated product data
         $data->save();
 
-        // Add a success message to the session
-
+        // Redirect with success message
         return redirect('showproducts');
-
     }
+
 
     public function showorder(Request $request){
 

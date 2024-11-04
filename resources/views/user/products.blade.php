@@ -11,7 +11,7 @@
                         @csrf
 
                         <div class="input-group">
-                            <input class="form-control" type="search" name="search" placeholder="Search">
+                            <input class="form-control search-form" type="search" name="search" placeholder="Search">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-success searchbtn">
                                     <i class="fa fa-search"></i> Search

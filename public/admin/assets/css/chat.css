@@ -1,63 +1,231 @@
 .chat {
+    background-color: white;
+    border: 1px solid #027148;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-top: 20%; /* Add margin equal to the height of the heading */
+}
+
+.chat-body {
     display: flex;
     flex-direction: column;
-    margin-top:200px;
-}
-
-.chat .top {
-    display: flex;
-    align-items: center;
+    flex: 1;
     padding: 10px;
-}
-
-.chat .top img {
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.chat .top p {
-    margin: 0;
-    font-weight: bold;
-}
-
-.chat .top small {
-    display: block;
+    position: relative; /* Important to position elements inside */
 }
 
 .messages {
+    flex: 1;  /* Take up remaining height */
+    overflow-y: auto;  /* Make it scrollable */
+    margin-bottom: 10px;  /* Space between messages and input */
+    padding-bottom: 10px; /* Space at the bottom */
+}
 
+.chat-form-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    /* Remove absolute positioning */
+    /* Keep it within the flow of the chat body */
+}
+
+.chat-form-container form {
+    display: flex;
+    width: 100%;
+}
+
+.chat-form-container input[type="text"] {
+    flex: 1;
+    padding: 5px;
+    color:black;
+    border: 2px solid grey; /* Default grey border */
+    border-radius: 10px; /* More rounded corners */
+    margin-right: 10px;
+    min-width: 0;
+    outline: none; /* Removes the blue outline */
+    transition: border-color 0.3s ease; /* Smooth transition */
+}
+.chat-form-container input[type="text"]:focus {
+    border-color: #027148; /* Green border on focus */
+    box-shadow: 0 0 5px rgba(2, 113, 72, 0.5); /* Optional: Add a subtle green shadow */
+    outline: none;
+}
+
+.admin-chat-button {
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border-radius: 5px;
+}
+
+/* Remove focus outline when the button is clicked or focused */
+.admin-chat-button:focus,
+.admin-chat-button:active {
+    outline: none; /* Ensure no focus outline on button */
+    border-color: transparent; /* Optional: Set the border color to transparent */
+}
+
+.admin-chat-button i {
+    color: grey!important; /* Default grey icon color */
+    font-size: 20px;
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.admin-chat-button:focus i,
+.admin-chat-button:hover i {
+    color: #027148!important; /* Green icon on focus/hover */
+}
+
+
+
+.user-list {
+    width: 30%; /* Occupy 30% of the chat width for the user list */
+    background-color: #f7f7f7; /* Light background for the user list */
+    border-right: 1px solid #027148;
+    overflow-y: auto; /* Scroll when the user list exceeds the container height */
+    padding: 10px;
+}
+
+.user-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-list li {
+    color:black;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #e0e0e0; /* Default background */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.user-list li:hover, .user-list li.active {
+    background-color: #027148; /* Highlight selected user */
+    color: white; /* Invert text color for the active user */
+}
+
+.messages {
+    padding: 15px;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow-y: auto; /* Enable scrolling if messages exceed the container height */
+    scrollbar-width: thin;
+    scrollbar-color: #027148 transparent;
+    background-color: #fff;
 }
 
 .message {
-
+    max-width: 80%;
+    border-radius: 15px;
+    padding: 10px;
     margin-bottom: 10px;
-}
-
-.message.received {
-    align-self: flex-start;
+    word-wrap: break-word;
 }
 
 .message.sent {
-    align-self: flex-end;
+    background-color: #027148;
+    color: white;
+    align-self: flex-end; /* Sent messages align to the right */
+}
+
+.message.received {
+    background-color: #f1f0f0;
+    color: black;
+    align-self: flex-start; /* Received messages align to the left */
 }
 
 .bottom {
     display: flex;
+    align-items: center;
     padding: 10px;
-    background-color: #f0f0f0;
+    border-top: 1px solid #027148;
+    background-color: #f7f7f7;
+}
+
+.bottom form {
+    display: flex;
+    flex-grow: 1;
 }
 
 .bottom input[type="text"] {
     flex-grow: 1;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 8px;
+    margin-right: 10px;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
-.bottom button {
-    background-color: #4CAF50;
-
-    margin-left: 10px;
+.bottom input[type="text"]:focus {
+    border-color: #027148;
+    box-shadow: 0 0 5px rgba(2, 113, 72, 0.5);
 }
+
+
+
+#loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #027148;
+}
+
+/*loading*/
+
+/* Loading spinner container */
+#loading-indicator {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack spinner and text vertically */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    height: 100%; /* Fill the chat body space */
+    width: 100%; /* Ensure it takes full width */
+    position: absolute; /* Position absolutely within chat body */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white; /* Solid background color, no transparency */
+    z-index: 9999; /* Ensure it's on top */
+}
+
+/* Spinner styling */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #027148;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px; /* Space between the spinner and text */
+    animation: spin 1s linear infinite;
+}
+
+/* Loading text */
+.loading-text {
+    font-size: 16px;
+    color: #027148;
+    margin-top: 0; /* Remove extra margin */
+}
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+

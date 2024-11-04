@@ -4,6 +4,7 @@ $(document).ready(function() {
         // Serialize the form data
         var formData = new FormData(this);
 
+
         // Send an AJAX request to submit the form
         $.ajax({
             url: uploadProductURL,

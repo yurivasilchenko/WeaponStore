@@ -20,7 +20,7 @@
         <div class="container">
 
 
-            <form action="{{url('updatedproduct',$data->id)}}" method="post"  enctype="multipart/form-data">
+            <form action="{{url('updatedproduct',$data->id)}}" class="custom-form" method="post"  enctype="multipart/form-data">
                 <div id="notification" class="notification"></div>
 
                 @csrf
@@ -56,7 +56,7 @@
                         <input type="text" class="form-control" id="quantity" name="quantity" value="{{$data->quantity}}" required>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 description">
                         <label for="desc">Description</label>
                         <textarea type="text" class="form-control" id="desc" name="desc" rows="4" required>{{$data->description}}</textarea>
                     </div>

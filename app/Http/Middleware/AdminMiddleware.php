@@ -18,6 +18,6 @@ class AdminMiddleware
        if(auth()->user() && auth()->user()->usertype == 'admin'){
            return $next($request);
        }
-        return redirect()->back();
+        return redirect('/redirect');
     }
 }

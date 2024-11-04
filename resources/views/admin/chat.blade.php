@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
     <title>Admin Panel</title>
+
+
+
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Required meta tags -->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -26,30 +33,36 @@
                 </ul>
             </div>
 
-            <div class="messages" id="chat-messages" style="display: none;">
-                @foreach($messages as $message)
-                    <div class="message {{ $message->sender_id == Auth::id() ? 'sent' : 'received' }}">
-                        <p><strong>{{ $message->sender->name }}:</strong> {{ $message->message }}</p>
-                    </div>
-                @endforeach
-            </div>
 
-            <!-- Loading indicator -->
-            <div id="loading-indicator" style="display: none;">
-                <p>Loading...</p>
-            </div>
 
-            <!-- Message input and submit form -->
-            <div class="bottom">
-                <form method="POST" action="/broadcast">
-                    @csrf
-                    <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-                    <input type="hidden" id="recipient_id" name="recipient_id">
-                    <button type="submit" style="height: 30px;width:30px;"></button>
-                </form>
-            </div>
+            <div class="chat-body">
 
+                <div id="loading-indicator" class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Loading messages...</p>
+                </div>
+
+                <div class="messages" id="chat-messages">
+                    @foreach($messages as $message)
+                        <div class="message {{ $message->sender_id == Auth::id() ? 'sent' : 'received' }}">
+                            <p><strong>{{ $message->sender->name }}:</strong> {{ $message->message }}</p>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="chat-form-container">
+                    <form method="POST" action="/broadcast">
+                        @csrf
+                        <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
+                        <input type="hidden" id="recipient_id" name="recipient_id">
+                        <button type="submit" class="admin-chat-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
+
     </div>
 
         <!-- page-body-wrapper ends -->
@@ -63,18 +76,16 @@
 
 <script>
     $(document).ready(function() {
-
         let pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
             cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
             encrypted: true,
-            authEndpoint: '/broadcasting/auth',  // This handles private channel authentication
+            authEndpoint: '/broadcasting/auth',
             auth: {
                 headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}'  // Include CSRF token
+                    'X-CSRF-Token': '{{ csrf_token() }}'
                 }
             }
         });
-
 
         let channel = null; // Define the channel globally so it can be reused
 
@@ -85,8 +96,6 @@
             $('#recipient_id').val(firstUserId);
             firstUser.addClass('active');
             loadMessagesForUser(firstUserId);
-
-            // Subscribe to the Pusher private channel for the first user
             subscribeToPrivateChannel(firstUserId);
         }
 
@@ -98,24 +107,18 @@
             const selectedUserId = $(this).data('user-id');
             $('#recipient_id').val(selectedUserId);
             loadMessagesForUser(selectedUserId);
-
-            // Subscribe to the Pusher private channel for the selected user
             subscribeToPrivateChannel(selectedUserId);
         });
 
         // Function to subscribe to private Pusher channel
         function subscribeToPrivateChannel(recipientId) {
             if (channel) {
-                // Unbind and unsubscribe the previous channel before subscribing to a new one
                 channel.unbind();
                 pusher.unsubscribe('private-chat.' + recipientId);
             }
 
-
-            // Subscribe to a new private channel
-
             channel = pusher.subscribe('private-chat.' + recipientId);
-            console.log(recipientId)
+            console.log(recipientId);
             Pusher.logToConsole = true;
 
             pusher.connection.bind('connected', function() {
@@ -126,37 +129,34 @@
                 console.error("Pusher connection error: ", err);
             });
 
-
             // Bind the chat event to receive messages for this channel
             channel.bind('chat', function(data) {
-                // Append the received message to the chat window
-                const newMessage = `<div class="left message"><p>${data.message}</p></div>`;
+                const selectedUser = $('.user-select.active').text(); // Get the selected user's name
+                const newMessage = `<div class="message received"><p><strong>${selectedUser}:</strong> ${data.message}</p></div>`;
                 $(".messages").append(newMessage);
-                console.log("binded");
-
-                // Scroll to the bottom of the chat
-                $(document).scrollTop($(document).height());
+                scrollToBottom(); // Scroll to the bottom when a new message is received
+                console.log("Message received");
             });
         }
 
         // Function to load messages for the selected user
         function loadMessagesForUser(userId) {
-            $('#loading-indicator').show();
-            $('#chat-messages').hide();
+            $('#loading-indicator').show();  // Show the loading spinner
+            $('#chat-messages').hide();      // Hide the chat messages until they load
 
             $.ajax({
                 url: '/adminchat/' + userId,
                 method: 'GET',
                 success: function(data) {
-                    console.log('Succes: ');
                     $('#chat-messages').html(data);
-                    $('#loading-indicator').hide();
-                    $('#chat-messages').show();
+                    $('#loading-indicator').hide();  // Hide the loading spinner once messages are loaded
+                    $('#chat-messages').show();      // Show the chat messages
+                    scrollToBottom();                // Scroll to the bottom
                 },
                 error: function(xhr) {
                     console.log('Error loading messages: ', xhr);
-                    $('#loading-indicator').hide();
-                    $('#chat-messages').show();
+                    $('#loading-indicator').hide();  // Hide the loading spinner if there's an error
+                    $('#chat-messages').show();      // Show the chat messages
                 }
             });
         }
@@ -174,17 +174,23 @@
                 data: {
                     _token: '{{ csrf_token() }}',
                     message: $("#message").val(),
-                    recipient_id: $("#recipient_id").val()  // Include recipient_id here
+                    recipient_id: $("#recipient_id").val()
                 }
             }).done(function(res) {
-                // Append the message to the chat, with appropriate alignment
-                $(".messages").append(`<div class="message sent"><p><strong>You:</strong> ${messageContent}</p></div>`);
-                $("#message").val('');  // Clear the input
-                $(document).scrollTop($(document).height());  // Scroll to the bottom
+                $(".messages").append(`<div class="message sent"><p><strong>Admin:</strong> ${$("#message").val()}</p></div>`);
+                $("#message").val(''); // Clear the input
+                scrollToBottom(); // Scroll to the bottom after sending a message
                 console.log('Message sent');
             });
         });
+
+        // Function to scroll to the bottom of the messages
+        function scrollToBottom() {
+            const messagesContainer = $(".messages");
+            messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+        }
     });
+
 
 </script>
 

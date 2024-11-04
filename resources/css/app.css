@@ -6,3 +6,11 @@
 [x-cloak] {
     display: none;
 }
+
+
+.profile-header{
+    background-color: #212121;
+}
+#navbarResponsive.collapse {
+    visibility: visible !important;
+}
