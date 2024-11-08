@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-6">
                 <div class="right-image">
-                    <img src="assets/images/store.jpg" alt="">
+                    <img src="/assets/images/store.jpg" alt="">
                 </div>
             </div>
         </div>
