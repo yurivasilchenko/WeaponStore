@@ -21,6 +21,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
 
 
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 </head>
 
 <body class="showproduct-body">
@@ -176,9 +184,11 @@
         </div>
     </div>
 </div>
+
 @include('user.footer')
 
 @include('user.scripts')
+@include('user.chat')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
