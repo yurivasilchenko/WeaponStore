@@ -43,6 +43,7 @@ Route::get('/delete/{id}', [HomeController::class,'deletecart']);
 Route::post('/order', [HomeController::class,'order']);
 Route::get('/product/{id}',[HomeController::class,'show'])->name('showproduct');
 Route::get('/filter-products', [HomeController::class, 'filterProducts'])->name('filter-products');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::post('/showorder/approve/{id}', [AdminController::class, 'approve'])->name('order.approve');
 Route::post('/showorder/disapprove/{id}', [AdminController::class, 'disapprove'])->name('order.disapprove');

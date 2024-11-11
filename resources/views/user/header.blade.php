@@ -17,7 +17,7 @@
                         <a class="nav-link" href="#">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
+                        <a class="nav-link" href="{{ url('contact') }}">Contact Us</a>
                     </li>
 
                     @if (Route::has('login'))
@@ -47,51 +47,7 @@
     </nav>
 </header>
 
-{{--
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Check screen size and initialize navbar state
-        if ($(window).width() < 992) {
-            $('#navbarResponsive').removeClass('show');
-            $('.navbar-toggler').attr('aria-expanded', 'false');
-        } else {
-            $('#navbarResponsive').addClass('show');
-            $('.navbar-toggler').attr('aria-expanded', 'true');
-        }
 
-        // Button click event to toggle the navbar
-        $('.navbar-toggler').on('click', function (e) {
-            e.stopPropagation(); // Prevent other JS conflicts
-
-            const $navbar = $('#navbarResponsive');
-            const isShown = $navbar.hasClass('show');
-
-            if (isShown) {
-                console.log("Closing navbar"); // Debugging output
-                $navbar.removeClass('show');
-                $(this).attr('aria-expanded', 'false');
-            } else {
-                console.log("Opening navbar"); // Debugging output
-                $navbar.addClass('show');
-                $(this).attr('aria-expanded', 'true');
-            }
-        });
-
-        // Reset navbar state on resize
-        $(window).on('resize', function () {
-            if ($(window).width() >= 992) {
-                $('#navbarResponsive').addClass('show');
-                $('.navbar-toggler').attr('aria-expanded', 'true');
-            } else {
-                $('#navbarResponsive').removeClass('show');
-                $('.navbar-toggler').attr('aria-expanded', 'false');
-            }
-        });
-    });
-</script>
-
---}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {

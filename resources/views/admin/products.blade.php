@@ -5,6 +5,7 @@
 <head>
     <!-- Required meta tags -->
     @include('admin.css')
+
 </head>
 <body>
 <div class="container-scroller">

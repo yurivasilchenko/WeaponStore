@@ -3176,12 +3176,13 @@
 			return page.start <= current && page.end >= current;
 		}, this)).pop();
 	};
+/*
 
-	/**
+	/!**
 	 * Gets the current succesor/predecessor position.
 	 * @protected
 	 * @returns {Number}
-	 */
+	 *!/
 	Navigation.prototype.getPosition = function(successor) {
 		var position, length,
 			settings = this._core.settings;
@@ -3199,6 +3200,8 @@
 
 		return position;
 	};
+
+*/
 
 	/**
 	 * Slides to the next item or page.
@@ -3240,47 +3243,50 @@
 
 })(window.Zepto || window.jQuery, window, document);
 
-/**
+
+/*
+
+/!**
  * Hash Plugin
  * @version 2.3.4
  * @author Artus Kolanowski
  * @author David Deutsch
  * @license The MIT License (MIT)
- */
+ *!/
 ;(function($, window, document, undefined) {
 	'use strict';
 
-	/**
+	/!**
 	 * Creates the hash plugin.
 	 * @class The Hash Plugin
 	 * @param {Owl} carousel - The Owl Carousel
-	 */
+	 *!/
 	var Hash = function(carousel) {
-		/**
+		/!**
 		 * Reference to the core.
 		 * @protected
 		 * @type {Owl}
-		 */
+		 *!/
 		this._core = carousel;
 
-		/**
+		/!**
 		 * Hash index for the items.
 		 * @protected
 		 * @type {Object}
-		 */
+		 *!/
 		this._hashes = {};
 
-		/**
+		/!**
 		 * The carousel element.
 		 * @type {jQuery}
-		 */
+		 *!/
 		this.$element = this._core.$element;
 
-		/**
+		/!**
 		 * All event handlers.
 		 * @protected
 		 * @type {Object}
-		 */
+		 *!/
 		this._handlers = {
 			'initialized.owl.carousel': $.proxy(function(e) {
 				if (e.namespace && this._core.settings.startPosition === 'URLHash') {
@@ -3334,18 +3340,18 @@
 		}, this));
 	};
 
-	/**
+	/!**
 	 * Default options.
 	 * @public
-	 */
+	 *!/
 	Hash.Defaults = {
 		URLhashListener: false
 	};
 
-	/**
+	/!**
 	 * Destroys the plugin.
 	 * @public
-	 */
+	 *!/
 	Hash.prototype.destroy = function() {
 		var handler, property;
 
@@ -3363,7 +3369,7 @@
 
 })(window.Zepto || window.jQuery, window, document);
 
-/**
+/!**
  * Support Plugin
  *
  * @version 2.3.4
@@ -3371,7 +3377,7 @@
  * @author Artus Kolanowski
  * @author David Deutsch
  * @license The MIT License (MIT)
- */
+ *!/
 ;(function($, window, document, undefined) {
 
 	var style = $('<support>').get(0).style,
@@ -3428,21 +3434,21 @@
 	}
 
 	if (tests.csstransitions()) {
-		/* jshint -W053 */
+		/!* jshint -W053 *!/
 		$.support.transition = new String(prefixed('transition'))
 		$.support.transition.end = events.transition.end[ $.support.transition ];
 	}
 
 	if (tests.cssanimations()) {
-		/* jshint -W053 */
+		/!* jshint -W053 *!/
 		$.support.animation = new String(prefixed('animation'))
 		$.support.animation.end = events.animation.end[ $.support.animation ];
 	}
 
 	if (tests.csstransforms()) {
-		/* jshint -W053 */
+		/!* jshint -W053 *!/
 		$.support.transform = new String(prefixed('transform'));
 		$.support.transform3d = tests.csstransforms3d();
 	}
 
-})(window.Zepto || window.jQuery, window, document);
+})(window.Zepto || window.jQuery, window, document);*/
