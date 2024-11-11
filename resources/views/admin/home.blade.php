@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <title>Admin Panel</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Required meta tags -->
     @include('admin.css')
 </head>

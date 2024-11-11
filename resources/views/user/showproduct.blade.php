@@ -18,7 +18,6 @@
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-sixteen.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
 
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -233,10 +232,9 @@
 
 <!-- Additional Scripts -->
 <script src="{{asset('assets/js/custom.js')}}"></script>
-<script src="{{asset('assets/js/owl.js')}}"></script>
 <script src="{{asset('assets/js/slick.js')}}"></script>
 <script src="{{asset('assets/js/isotope.js')}}"></script>
-<script src="{{asset('assets/js/accordions.js')}}"></script>
+
 
 
 <script language = "text/Javascript">

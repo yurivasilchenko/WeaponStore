@@ -97,7 +97,6 @@
 <script src="assets/js/owl.js"></script>
 <script src="assets/js/slick.js"></script>
 <script src="assets/js/isotope.js"></script>
-<script src="assets/js/accordions.js"></script>
 
 
 <script language = "text/Javascript">
