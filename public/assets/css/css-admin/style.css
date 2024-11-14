@@ -1187,42 +1187,8 @@ code {
     .page-body-wrapper {
       width: 100%; } }
 
-.container-scroller {
-  display: flex;
-  position: relative; }
 
-.main-panel {
-  transition: width 0.25s ease, margin 0.25s ease;
-  width: 100%;
-  min-height: calc(100vh - 70px);
-  padding-top: 70px;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column; }
-  @media (max-width: 991px) {
-    .main-panel {
-      margin-left: 0;
-      width: 100%; } }
 
-.content-wrapper {
-  background: #000000;
-  padding: 1.875rem 1.75rem;
-  width: 100%;
-  -webkit-flex-grow: 1;
-  flex-grow: 1; }
-
-/*.notification {
-    margin-bottom: 20px;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #027148;
-    color: white;
-    display: none;
-    font-size: 20px;
-    z-index: 999;
-    animation: fadeInOut 5s forwards;
-}*/
 .notification {
     margin-bottom: 30px;
     margin-top: 30px;
@@ -1302,44 +1268,11 @@ code {
     border-color: #3d4872!important;
 }
 
-.custom-img{
-    border-radius: 0!important;
-    width: 150px!important;
-    height: auto!important;
-    display: block!important;
-}
-.custom-card{
-    background-color:#027148;
-    border-radius: 6px
-}
-.custom-brand:hover {
-    color: green;
-}
-
-.custom-navigation{
-    margin-top: 50px;
-
-}
 
 .custom-wrapper{
     -webkit-box-shadow: 20px 19px 34px -15px rgba(0, 0, 0, 0.5);
 }
 
-/*description cells*/
-
-.action-buttons {
-    display: flex;
-    justify-content: center; /* Centers the buttons horizontally */
-    gap: 10px; /* Adjust the distance between the buttons */
-    padding-top:30px; /* Adds padding to the top and bottom */
-    padding-bottom: 20px;
-}
-
-.action-buttons .btn {
-    align-self: center; /* Vertically centers the buttons */
-    padding: 6px 12px; /* Increases padding for larger buttons */
-    font-size: 16px; /* Increases the font size */
-}
 /*buttons css*/
 
 .table td{
