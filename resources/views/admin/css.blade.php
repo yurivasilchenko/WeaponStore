@@ -16,6 +16,7 @@
 <!-- endinject -->
 <!-- Layout styles -->
 <link rel="stylesheet" href="assets/css/css-admin/style.css">
+<link rel="stylesheet" href="assets/css/css-admin/showorder.css">
 <link rel="stylesheet" href="assets/css/css-admin//chat.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="admin/assets/images/favicon.png" />
