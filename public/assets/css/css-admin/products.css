@@ -1,0 +1,172 @@
+.container-scroller {
+    display: flex;
+    position: relative; }
+
+.main-panel {
+    transition: width 0.25s ease, margin 0.25s ease;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    padding-top: 70px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column; }
+@media (max-width: 991px) {
+    .main-panel {
+        margin-left: 0;
+        width: 100%; } }
+
+.navbar.fixed-top + .page-body-wrapper {
+    background-color: #121212;
+}
+
+.content-wrapper {
+    background-color: #121212; /* Updated to black */
+    padding: 1.875rem 1.75rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
+/* Styling the search container background and spacing */
+.card.custom-card {
+    background-color: #027148; /* Background color for search container */
+    border-radius: 6px;
+    margin-bottom: 20px; /* Adds space between the search container and the next card */
+}
+
+
+.custom-brand:hover {
+    color: green;
+}
+
+.custom-navigation{
+    margin-top: 50px;
+
+}
+
+/* Apply single-column layout */
+.custom-form {
+    max-width: 600px; /* Optional: Limit the form width */
+    margin: auto;
+    padding: 20px;
+    background-color: #1a1a1a; /* Dark background for the form */
+    border: 2px solid #027148; /* Green border */
+    border-radius: 8px;
+}
+
+/* Ensures each form-group is in a single column */
+.custom-form .form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-form .form-group {
+    width: 100%; /* Full width */
+    margin-bottom: 15px; /* Space between fields */
+}
+
+/* Style adjustments */
+.custom-form label {
+    color: #ffffff;
+}
+
+.custom-form .form-control,
+.custom-form select,
+.custom-form .btn {
+    width: 100%; /* Full width for each input */
+}
+
+/* Base styling for the submit button */
+.btn-primary {
+    background-color: transparent !important;    /* Transparent background */
+    width: 50%!important;
+    border: 2px solid #027148 !important;        /* Green border */
+    color: white !important;                   /* Green text color */
+    font-weight: bold !important;
+    padding: 10px 20px !important;               /* Padding for better spacing */
+    display: inline-block !important;            /* Prevents full row stretch */
+    margin: 10px auto !important;                /* 10px vertical margin, auto horizontal centering */
+    text-align: center !important;               /* Center text inside the button */
+}
+
+/* Hover effect */
+.btn-primary:hover {
+    background-color: #28a745 !important;        /* Green background on hover */
+    color: white !important;                     /* White text on hover */
+    border-color: #28a745 !important;            /* Keeps border color consistent */
+}
+
+
+.custom-file-input {
+    background-color: transparent !important;
+}
+
+.custom-file-label {
+    background-color: white !important; /* White background */
+    color: black !important; /* Black text */
+    border: 1px solid #28a745 !important;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Changes on hover */
+.custom-file-label:hover {
+    background-color: #28a745 !important; /* Green background on hover */
+    color: white !important; /* White text on hover */
+    border-color: #28a745 !important;
+}
+
+/* Ensure button group is responsive */
+.btn-group {
+    display: flex;
+    margin-top: 15px;
+    gap: 0; /* Remove gap to prevent border issues */
+}
+
+/* Add spacing via margin instead of gap */
+.btn-group .btn {
+    flex: 1; /* Make buttons evenly take available space */
+    padding: 10px;
+    font-weight: bold;
+    margin-right: 10px; /* Add spacing */
+}
+
+/* Remove the margin on the last button */
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+/* Adjust button alignment on smaller screens */
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+        align-items: stretch; /* Makes buttons stack vertically */
+    }
+
+    .btn-group .btn {
+        width: 100%;
+        margin: 0 0 10px 0; /* Add spacing between vertical buttons */
+    }
+
+    .btn-group .btn:last-child {
+        margin-bottom: 0; /* Remove margin for last button */
+    }
+}
+
+
+
+.form-group h1 {
+    background-color: #027148;
+    color: white;
+    padding: 15px 0; /* Adjusts padding for better alignment */
+    font-size: 25px;
+    border-radius: 8px; /* Rounded edges */
+    text-align: center; /* Centers the text */
+    margin: 0; /* Removes default margin around h1 */
+}
+
+#remove-specs-btn {
+    border-left: 1px solid #c82333 !important; /* Enforce left border */
+}
+
+
