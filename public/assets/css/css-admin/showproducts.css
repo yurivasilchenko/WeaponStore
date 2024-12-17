@@ -1,0 +1,133 @@
+
+.container-scroller {
+    display: flex;
+    position: relative; }
+
+.main-panel {
+    transition: width 0.25s ease, margin 0.25s ease;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    padding-top: 70px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column; }
+@media (max-width: 991px) {
+    .main-panel {
+        margin-left: 0;
+        width: 100%; } }
+
+.navbar.fixed-top + .page-body-wrapper {
+    background-color: #121212;
+}
+
+.content-wrapper {
+    background-color: #121212; /* Updated to black */
+    padding: 1.875rem 1.75rem;
+    width: 100%;
+    flex-grow: 1;
+}
+.form-check-input {
+    position: relative!important; /* Allow the checkbox to align naturally */
+    margin: 0!important; /* Reset any offsets */
+    display: block!important; /* Ensure it behaves as a block-level element within flex/centering */
+}
+
+/* Styling the search container background and spacing */
+/* Styling the search container background and spacing */
+.search {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 1px;
+    width: 100%;
+}
+
+.search input.form-control {
+    flex-grow: 2; /* Make input take up more space */
+    min-width: 200px; /* Set a minimum width to avoid it shrinking too much */
+    max-width: 400px; /* Limit the maximum width */
+}
+
+.search .btn-primary {
+    flex-grow: 0; /* Prevent button from growing */
+    padding-left: 10px; /* Add some space for text inside the button */
+    padding-right: 10px; /* Add some space for text inside the button */
+    min-width: 80px; /* Set a reasonable min-width to fit the text */
+    width: auto; /* Allow button width to adjust based on text */
+}
+
+@media (max-width: 768px) {
+    .search input.form-control {
+        min-width: 80px; /* Minimum width for the button on small screens */
+        padding-left: 2px!important;
+        padding-right: 2px!important;
+        text-align: center;
+    }
+
+    .search .btn-primary {
+        width: auto; /* Let the button width adjust based on the content */
+        min-width: 70px; /* Minimum width for the button on small screens */
+        padding-left: 2px!important;
+        padding-right: 2px!important;
+        text-align: center;
+    }
+}
+
+.card.custom-card {
+    background-color: #027148; /* Background color for search container */
+    border-radius: 6px;
+}
+.description-cell {
+    max-width: 200px; /* Adjust the max-width as needed */
+    white-space: nowrap;
+    overflow: auto; /* Add scrolling */
+}
+
+.btn-warning{
+    color:white!important;
+    background-color:#027148!important;
+    border-color: #027148!important;
+}
+
+
+/* Ensure <td> content is vertically and horizontally centered */
+.table td {
+    text-align: center; /* Horizontally center */
+    vertical-align: middle!important; /* Vertically center */
+    position: relative;
+}
+
+.table th {
+    text-align: center; /* Horizontally center */
+    vertical-align: middle; /* Vertically center */
+    padding: 10px; /* Optional: Add padding for better spacing */
+}
+
+
+/* Custom card*/
+/* Styling the search container background and spacing */
+.card.custom-card {
+    background-color: #027148; /* Background color for search container */
+    border-radius: 6px;
+    margin-bottom: 20px; /* Adds space between the search container and the next card */
+}
+
+.search .btn-primary {
+    background-color: #fff;
+    color: #027148;
+    border: none;
+}
+
+.search .form-control {
+    background-color: #ffffff; /* Optional: white background for the input */
+    color: #027148;
+}
+.custom-brand:hover {
+    color: green;
+}
+
+.custom-navigation{
+    margin-top: 50px;
+
+}

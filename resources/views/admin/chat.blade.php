@@ -2,12 +2,6 @@
 <html lang="en">
 <head>
     <title>Admin Panel</title>
-
-
-
-
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Required meta tags -->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -23,50 +17,56 @@
     <!-- partial -->
     @include('admin.navbar')
 
-    <div class="container-scroller">
-        <div class="chat">
-            <div class="user-list">
-                <ul>
-                    @foreach($users as $user)
-                        <li data-user-id="{{ $user->id }}" class="user-select">{{ $user->name }}</li>
-                    @endforeach
-                </ul>
-            </div>
+    <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+            <div class="content-wrapper">
+
+                <div class="chat">
+                    <div class="user-list">
+                        <ul>
+                            @foreach($users as $user)
+                                <li data-user-id="{{ $user->id }}" class="user-select">{{ $user->name }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
 
 
 
-            <div class="chat-body">
+                    <div class="chat-body">
 
-                <div id="loading-indicator" class="loading-spinner">
-                    <div class="spinner"></div>
-                    <p class="loading-text">Loading messages...</p>
-                </div>
-
-                <div class="messages" id="chat-messages">
-                    @foreach($messages as $message)
-                        <div class="message {{ $message->sender_id == Auth::id() ? 'sent' : 'received' }}">
-                            <p><strong>{{ $message->sender->name }}:</strong> {{ $message->message }}</p>
+                        <div id="loading-indicator" class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p class="loading-text">Loading messages...</p>
                         </div>
-                    @endforeach
-                </div>
 
-                <div class="chat-form-container">
-                    <form method="POST" action="/broadcast">
-                        @csrf
-                        <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-                        <input type="hidden" id="recipient_id" name="recipient_id">
-                        <button type="submit" class="admin-chat-button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
+                        <div class="messages" id="chat-messages">
+                            @foreach($messages as $message)
+                                <div class="message {{ $message->sender_id == Auth::id() ? 'sent' : 'received' }}">
+                                    <p><strong>{{ $message->sender->name }}:</strong> {{ $message->message }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="chat-form-container">
+                            <form method="POST" action="/broadcast">
+                                @csrf
+                                <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
+                                <input type="hidden" id="recipient_id" name="recipient_id">
+                                <button type="submit" class="admin-chat-button">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+
 
         <!-- page-body-wrapper ends -->
-    </div>
+</div>
 <!-- container-scroller -->
 <!-- plugins:js -->
 @include('admin.scripts')

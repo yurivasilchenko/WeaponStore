@@ -1,3 +1,32 @@
+.container-scroller {
+    display: flex;
+    position: relative; }
+
+.main-panel {
+    transition: width 0.25s ease, margin 0.25s ease;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    padding-top: 70px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column; }
+@media (max-width: 991px) {
+    .main-panel {
+        margin-left: 0;
+        width: 100%; } }
+
+.navbar.fixed-top + .page-body-wrapper {
+    background-color: #121212;
+}
+
+.content-wrapper {
+    background-color: #121212; /* Updated to black */
+    padding: 1.875rem 1.75rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
 .chat {
     background-color: white;
     border: 1px solid #027148;
@@ -8,7 +37,6 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    margin-top: 20%; /* Add margin equal to the height of the heading */
 }
 
 .chat-body {

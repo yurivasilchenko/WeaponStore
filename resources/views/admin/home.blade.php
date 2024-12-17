@@ -3,7 +3,7 @@
 <head>
     <title>Admin Panel</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/css-admin/style.css">
+    <link rel="stylesheet" href="assets/css/css-admin/showorder.css">
 
     <!-- Required meta tags -->
     @include('admin.css')
